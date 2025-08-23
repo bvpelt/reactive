@@ -96,3 +96,32 @@ BUILD SUCCESSFUL in 584ms
 ```
 
 Mono.just() will not accept an empty value instead use Mono.justOrEmpty() or Mono.empty().
+
+# Git
+
+```bash
+# Create and switch to feature branch (if not already on one)
+git checkout -b feature/reactive-improvements
+
+# Commit your changes
+git add .
+git commit -m "Add reactive Spring Boot improvements"
+
+# Push the feature branch
+git push origin feature/reactive-improvements
+
+# Create a tag for this feature
+git tag -a v1.0-reactive-feature -m "Reactive Spring Boot feature implementation"
+
+# Push the tag
+git push origin v1.0-reactive-feature
+```
+
+```bash
+git checkout -b step-01
+git add .
+git commit -m "step-01"
+git push origin step-01
+git tag -a vstep-01 -m "step-01 Mono"
+git push origin vstep-01
+```
