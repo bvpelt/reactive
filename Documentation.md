@@ -2,6 +2,8 @@
 
 See https://www.youtube.com/watch?v=y3ySZkSgWik
 
+https://youtu.be/y3ySZkSgWik?feature=shared&t=1246
+
 In reactive programming there is a publisher and a subscriber.
 The publisher generates data, the subscriber uses data
 
