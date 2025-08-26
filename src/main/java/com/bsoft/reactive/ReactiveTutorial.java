@@ -3,6 +3,7 @@ package com.bsoft.reactive;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.SignalType;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuple3;
 import reactor.util.function.Tuple4;
@@ -10,6 +11,7 @@ import reactor.util.function.Tuple4;
 import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Slf4j
 public class ReactiveTutorial {
@@ -166,8 +168,198 @@ public class ReactiveTutorial {
         return Flux.zip(flux1, flux2, mono);
     }
 
+    private Mono<List<Integer>> testCollectList() {
+
+        Flux<Integer> flux = Flux.range(1,20);
+
+        // From a number of elements create 1 list which contains all the elements
+        return flux.collectList();
+    }
+
+    private List<Integer> testCollectList1() {
+
+        // From a number of elements create 1 list which contains all the elements
+        return testCollectList().block();
+    }
 
 
+    private List<Integer> testCollectList2() {
+        Flux<Integer> flux = Flux.range(1,20)
+                .delayElements(Duration.ofMillis(250));
+
+        // From a number of elements create 1 list which contains all the elements
+        return flux.collectList().block();
+    }
+
+    private Flux<List<Integer>> testBuffer() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .delayElements(Duration.ofMillis(250));
+
+        // From a number of elements create a number of lists in a buffer
+        return flux.buffer();
+    }
+
+    private Flux<List<Integer>> testBuffer1(int maxelements) {
+        Flux<Integer> flux = Flux.range(1,10)
+                .delayElements(Duration.ofMillis(250));
+
+        // From a number of elements create a number of lists in a buffer with maximum 3 elements
+        return flux.buffer(maxelements);
+    }
+
+
+    private Flux<List<Integer>> testBuffer2(int delay) {
+        Flux<Integer> flux = Flux.range(1,10)
+                .delayElements(Duration.ofMillis(250));
+
+        // From a number of elements create a number of lists in a buffer after delay of 500ms
+        return flux.buffer(Duration.ofMillis(delay));
+    }
+
+    private Mono<Map<Integer,Integer>> testCollectMap() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements create a single map with <a, a*a> for each element
+        return flux.collectMap(integer -> integer, integer -> integer*integer);
+    }
+
+    private Flux<Integer> testDoOnEach() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements in a Flux for each element in the flux show the signal
+        return flux.doOnEach(signal -> System.out.println("Signal: " + signal));
+    }
+
+    private Flux<Integer> testDoOnEach1() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements in a Flux for each element in the flux show the signal
+        return flux.doOnEach(signal -> {
+            if (signal.getType() == SignalType.ON_COMPLETE) {
+                System.out.println("Ready");
+            } else {
+                System.out.println("Signal value: " + signal.get());
+            }
+        });
+    }
+
+    private Flux<Integer> testDoOnComplete() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements in a Flux for the complete signal
+        return flux.doOnComplete(() -> System.out.println("Ready"));
+    }
+
+    private Flux<Integer> testDoOnNext() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements in a Flux for each value -- instead of each signal as in dooneach -- process the value
+        return flux.doOnNext(integer -> System.out.println("Value: " + integer));
+    }
+
+    private Flux<Integer> testDoOnSubscribe() {
+        Flux<Integer> flux = Flux.range(1,10);
+
+        // From a number of elements in a Flux on the subscribe event do specified action
+        return flux.doOnSubscribe(subscription -> System.out.println("Subscribed"));
+    }
+
+    private Flux<Integer> testDoOnCancel(int msDelay) {
+        Flux<Integer> flux = Flux.range(1,10)
+                .delayElements(Duration.ofMillis(msDelay));
+
+        // From a number of elements in a Flux on the cancel event do specified action
+        return flux.doOnCancel(() -> System.out.println("Cancelled"));
+    }
+
+    private Flux<Integer> testDoOnError() { // Generate exception
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Error on integer: " + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux;
+    }
+
+    private Flux<Integer> testDoOnError1() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Invalid number: " + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux
+                .onErrorContinue((throwable, o) -> {
+                    System.out.println("Although error: " + throwable.getMessage() + " occurred don't worry about: " + o);
+                    log.error("Although error: {} occurred on value: {} continue", throwable.getMessage(), o);
+                });
+    }
+
+    private Flux<Integer> testDoOnErrorReturn() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Invalid number: " + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux
+                .onErrorReturn(-1); // return special value -1 and stop processing
+    }
+
+    private Flux<Integer> testDoOnErrorReturn1() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Invalid number: " + integer);
+                    } if (integer == 6) {
+                        throw new ArithmeticException("Arithmetic Exception: "  + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux
+                .onErrorReturn(RuntimeException.class, -1)
+                .onErrorReturn(ArithmeticException.class, -2); // return special value -1 and stop processing
+    }
+
+    private Flux<Integer> testDoOnErrorResume() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Invalid number: " + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux
+                .onErrorResume(throwable ->  Flux.range(100,5));
+    }
+
+    private Flux<Integer> testDoOnErrorMap() {
+        Flux<Integer> flux = Flux.range(1,10)
+                .map(integer -> {
+                    if (integer == 5) {
+                        throw new RuntimeException("Invalid number: " + integer);
+                    } else {
+                        return integer;
+                    }
+                });
+
+        return flux
+                .onErrorMap(throwable -> new UnsupportedOperationException(throwable.getMessage()));
+    }
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -176,14 +368,10 @@ public class ReactiveTutorial {
         /*
         reactiveTutorial.testMono(); // will nog work there is no subscription yet. When running the program exits immeadiately
                                      // the compiler gives a warning: Value is never used as Publisher
-         */
 
-        /*
         reactiveTutorial.testMono()
                 .subscribe();        // Data is generated, but the subscriber is not using the data
-        */
 
-        /*
         log.info("Demo Mono.just");
         reactiveTutorial.testMono()
                 .subscribe(System.out::println);
@@ -240,8 +428,6 @@ public class ReactiveTutorial {
         reactiveTutorial.testConcat()
                 .subscribe(System.out::println);
 
-         */
-
         log.info("Demo Flux.merge");
         reactiveTutorial.testMerge()
                 .subscribe(System.out::println);
@@ -261,6 +447,92 @@ public class ReactiveTutorial {
 
         log.info("Demo Flux.zip 2 flux 1 mono");
         reactiveTutorial.testComplexZip()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.collectList");
+        reactiveTutorial.testCollectList()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.collectList1");
+        log.info("Start collectList1");
+        System.out.println(reactiveTutorial.testCollectList1());
+        log.info("End   collectList1");
+
+        log.info("Demo Flux.collectList2");
+        log.info("Start collectList2");
+        System.out.println(reactiveTutorial.testCollectList2());
+        log.info("End   collectList2");
+
+        log.info("Demo Flux.buffer");
+        reactiveTutorial.testBuffer()
+                .subscribe(System.out::println);
+        Thread.sleep(3000);
+
+        log.info("Demo Flux.buffer with maximum value 3");
+        reactiveTutorial.testBuffer1(3)
+                .subscribe(System.out::println);
+        Thread.sleep(3000);
+
+        log.info("Demo Flux.buffer with delay of 500ms");
+        reactiveTutorial.testBuffer2(500)
+                .subscribe(System.out::println);
+        Thread.sleep(3000);
+
+        log.info("Demo Flux.collectMap");
+        reactiveTutorial.testCollectMap()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnEach");
+        reactiveTutorial.testDoOnEach()
+                .subscribe();
+
+        log.info("Demo Flux.doOnEach");
+        reactiveTutorial.testDoOnEach1()
+                .subscribe();
+
+
+        log.info("Demo Flux.doOnComplete");
+        reactiveTutorial.testDoOnComplete()
+                .subscribe(System.out::println);
+
+
+        log.info("Demo Flux.doOnNext");
+        reactiveTutorial.testDoOnNext()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnSubscribe");
+        reactiveTutorial.testDoOnSubscribe()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnCancel");
+        Disposable disposable = reactiveTutorial.testDoOnCancel(250)  // 250 ms delay between elements
+                .subscribe(System.out::println);
+        Thread.sleep(752);
+        disposable.dispose();
+
+        log.info("Demo Flux.doOnError");
+        reactiveTutorial.testDoOnError()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnError1");
+        reactiveTutorial.testDoOnError1()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnErrorReturn");
+        reactiveTutorial.testDoOnErrorReturn()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnErrorReturn1");
+        reactiveTutorial.testDoOnErrorReturn1()
+                .subscribe(System.out::println);
+
+        log.info("Demo Flux.doOnErrorResume");
+        reactiveTutorial.testDoOnErrorResume()
+                .subscribe(System.out::println);
+*/
+
+        log.info("Demo Flux.doOnErrorMap");
+        reactiveTutorial.testDoOnErrorMap()
                 .subscribe(System.out::println);
     }
 }
