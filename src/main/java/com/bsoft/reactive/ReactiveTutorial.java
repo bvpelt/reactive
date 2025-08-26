@@ -366,172 +366,170 @@ public class ReactiveTutorial {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
 
         /*
+        log.info("01 - Demo Mono test");
         reactiveTutorial.testMono(); // will nog work there is no subscription yet. When running the program exits immeadiately
                                      // the compiler gives a warning: Value is never used as Publisher
 
+        log.info("02 - Demo Mono test subscribe");
         reactiveTutorial.testMono()
                 .subscribe();        // Data is generated, but the subscriber is not using the data
 
-        log.info("Demo Mono.just");
+        log.info("03 - Demo Mono.just");
         reactiveTutorial.testMono()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.just");
+        log.info("04 - Demo Flux.just");
         reactiveTutorial.testFlux()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.fromIterable");
+        log.info("05 - Demo Flux.fromIterable");
         reactiveTutorial.testFlux01()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.map -- each element to uppercase");
+        log.info("06 - Demo Flux.map -- each element to uppercase");
         reactiveTutorial.testMap()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.flatMap -- each (provider) element to lowercase");
+        log.info("07 - Demo Flux.flatMap -- each (provider) element to lowercase");
         reactiveTutorial.testFlatMap()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.skip -- skip number of elements from provider");
+        log.info("08 - Demo Flux.skip -- skip number of elements from provider");
         reactiveTutorial.testSkip()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.skip -- skip with delay");
+        log.info("09 - Demo Flux.skip -- skip with delay");
         reactiveTutorial.testSkipDuration()
                 .subscribe(System.out::println);
-
         Thread.sleep(10000);
 
-        log.info("Demo Flux.skip -- skip with delay on skip");
+        log.info("10 - Demo Flux.skip -- skip with delay on skip");
         reactiveTutorial.testSkipDuration01()
                 .subscribe(System.out::println);
-
         Thread.sleep(10000);
 
-        log.info("Demo Flux.skipLast");
+        log.info("11 - Demo Flux.skipLast");
         reactiveTutorial.testSkipLast()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.range");
+        log.info("12 - Demo Flux.range");
         reactiveTutorial.testSkipRange()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.skipWhile");
+        log.info("13 - Demo Flux.skipWhile");
         reactiveTutorial.testSkipWhile()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.skipUntil");
+        log.info("14 - Demo Flux.skipUntil");
         reactiveTutorial.testSkipUntil()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.concat");
+        log.info("15 - Demo Flux.concat");
         reactiveTutorial.testConcat()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.merge");
+        log.info("16 - Demo Flux.merge");
         reactiveTutorial.testMerge()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.merge with delay");
+        log.info("17 - Demo Flux.merge with delay");
         reactiveTutorial.testMergeDelay()
                 .subscribe(System.out::println);
         Thread.sleep(3000);
 
-        log.info("Demo Flux.zip");
+        log.info("18 - Demo Flux.zip");
         reactiveTutorial.testZip()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.zip 4 streams");
+        log.info("19 - Demo Flux.zip 4 streams");
         reactiveTutorial.testZipFour()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.zip 2 flux 1 mono");
+        log.info("20 - Demo Flux.zip 2 flux 1 mono");
         reactiveTutorial.testComplexZip()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.collectList");
+        log.info("21 - Demo Flux.collectList");
         reactiveTutorial.testCollectList()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.collectList1");
+        log.info("22 - Demo Flux.collectList1");
         log.info("Start collectList1");
         System.out.println(reactiveTutorial.testCollectList1());
         log.info("End   collectList1");
 
-        log.info("Demo Flux.collectList2");
+        log.info("23 - Demo Flux.collectList2");
         log.info("Start collectList2");
         System.out.println(reactiveTutorial.testCollectList2());
         log.info("End   collectList2");
 
-        log.info("Demo Flux.buffer");
+        log.info("24 - Demo Flux.buffer");
         reactiveTutorial.testBuffer()
                 .subscribe(System.out::println);
         Thread.sleep(3000);
 
-        log.info("Demo Flux.buffer with maximum value 3");
+        log.info("25 - Demo Flux.buffer with maximum value 3");
         reactiveTutorial.testBuffer1(3)
                 .subscribe(System.out::println);
         Thread.sleep(3000);
 
-        log.info("Demo Flux.buffer with delay of 500ms");
+        log.info("26 - Demo Flux.buffer with delay of 500ms");
         reactiveTutorial.testBuffer2(500)
                 .subscribe(System.out::println);
         Thread.sleep(3000);
 
-        log.info("Demo Flux.collectMap");
+        log.info("27 - Demo Flux.collectMap");
         reactiveTutorial.testCollectMap()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnEach");
+        log.info("28 - Demo Flux.doOnEach");
         reactiveTutorial.testDoOnEach()
                 .subscribe();
 
-        log.info("Demo Flux.doOnEach");
+        log.info("29 - Demo Flux.doOnEach");
         reactiveTutorial.testDoOnEach1()
                 .subscribe();
 
-
-        log.info("Demo Flux.doOnComplete");
+        log.info("30 - Demo Flux.doOnComplete");
         reactiveTutorial.testDoOnComplete()
                 .subscribe(System.out::println);
 
-
-        log.info("Demo Flux.doOnNext");
+        log.info("31 - Demo Flux.doOnNext");
         reactiveTutorial.testDoOnNext()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnSubscribe");
+        log.info("32 - Demo Flux.doOnSubscribe");
         reactiveTutorial.testDoOnSubscribe()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnCancel");
+        log.info("33 - Demo Flux.doOnCancel");
         Disposable disposable = reactiveTutorial.testDoOnCancel(250)  // 250 ms delay between elements
                 .subscribe(System.out::println);
         Thread.sleep(752);
         disposable.dispose();
 
-        log.info("Demo Flux.doOnError");
+        log.info("34 - Demo Flux.doOnError");
         reactiveTutorial.testDoOnError()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnError1");
+        log.info("35 - Demo Flux.doOnError1");
         reactiveTutorial.testDoOnError1()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnErrorReturn");
+        log.info("36 - Demo Flux.doOnErrorReturn");
         reactiveTutorial.testDoOnErrorReturn()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnErrorReturn1");
+        log.info("37 - Demo Flux.doOnErrorReturn1");
         reactiveTutorial.testDoOnErrorReturn1()
                 .subscribe(System.out::println);
 
-        log.info("Demo Flux.doOnErrorResume");
+        log.info("38 - Demo Flux.doOnErrorResume");
         reactiveTutorial.testDoOnErrorResume()
                 .subscribe(System.out::println);
 */
 
-        log.info("Demo Flux.doOnErrorMap");
+        log.info("39 - Demo Flux.doOnErrorMap");
         reactiveTutorial.testDoOnErrorMap()
                 .subscribe(System.out::println);
     }
