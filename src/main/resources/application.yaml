@@ -1,0 +1,23 @@
+logging:
+  level:
+    org:
+      apache:
+        http: DEBUG
+      springframework:
+        security: INFO
+        web:
+          reactive:
+            function:
+              client: DEBUG
+          client: DEBUG
+    com:
+      bsoft: DEBUG
+    reactor:
+      netty:
+        http:
+          client: DEBUG
+          HttpClient: DEBUG
+
+spring:
+  application:
+    name: reactive
