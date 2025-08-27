@@ -145,3 +145,9 @@ docker compose up
 mongodb-compass mongodb://localhost:27017/
 
 ```
+
+## DataController
+The difference between `@Controller` and `@RestController` is:
+- Controller is used to redirect to a html page
+- RestControlles give json responses
+
