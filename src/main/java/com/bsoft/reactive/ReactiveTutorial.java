@@ -1,6 +1,7 @@
 package com.bsoft.reactive;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
@@ -365,7 +366,6 @@ public class ReactiveTutorial {
     public static void main(String[] args) throws InterruptedException {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
 
-        /*
         log.info("01 - Demo Mono test");
         reactiveTutorial.testMono(); // will nog work there is no subscription yet. When running the program exits immeadiately
                                      // the compiler gives a warning: Value is never used as Publisher
@@ -527,7 +527,6 @@ public class ReactiveTutorial {
         log.info("38 - Demo Flux.doOnErrorResume");
         reactiveTutorial.testDoOnErrorResume()
                 .subscribe(System.out::println);
-*/
 
         log.info("39 - Demo Flux.doOnErrorMap");
         reactiveTutorial.testDoOnErrorMap()
