@@ -19,8 +19,8 @@ private Mono<String> testMono() {  // This is the publisher
 }
 
 log.info("01 - Demo Mono test");
-reactiveTutorial.testMono(); // will nog work there is no subscription yet. When running the program exits immeadiately
-// the compiler gives a warning: Value is never used as Publisher
+reactiveTutorial.testMono(); // will not work there is no subscription yet. When running the program exits immeadiately
+                             // the compiler gives a warning: Value is never used as Publisher
 ```
 
 ```text
@@ -92,20 +92,80 @@ Dart
 Javascript
 COBOL
 C++
+```
+### 06 - Demo Flux.map -- each element to uppercase
+```bash
+private Flux<String> testMap() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++");
+
+    // for each element of the flux execute a function
+    return flux.map(s -> s.toUpperCase(Locale.ROOT));
+}
+
+log.info("06 - Demo Flux.map -- each element to uppercase");
+reactiveTutorial.testMap()
+        .subscribe(System.out::println);
+````
+
+```text
 08:07:03.172 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 06 - Demo Flux.map -- each element to uppercase
 DART
 JAVASCRIPT
 COBOL
 C++
+```
+### 07 - Demo Flux.flatMap -- each (provider) element to lowercase
+```bash
+private Flux<String> testFlatMap() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++");
+
+    // for each element of the flux execute a function on a publisher
+    // instead of a blocking operation (such as a database query) use a publisher
+    return flux.flatMap(s -> Mono.just(s.toLowerCase(Locale.ROOT)));
+}
+
+log.info("07 - Demo Flux.flatMap -- each (provider) element to lowercase");
+reactiveTutorial.testFlatMap()
+        .subscribe(System.out::println);
+````
+
+```text
 08:07:03.173 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 07 - Demo Flux.flatMap -- each (provider) element to lowercase
 dart
 javascript
 cobol
 c++
+```
+### 08 - Demo Flux.skip -- skip number of elements from provider
+```bash
+private Flux<String> testSkip() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++");
+
+    log.info("Number of elements in flux: {}", flux.count().block());
+
+    // Skip the first two elements of the Flux
+    return flux.skip(2);
+}
+
+log.info("08 - Demo Flux.skip -- skip number of elements from provider");
+reactiveTutorial.testSkip()
+        .subscribe(System.out::println);
+````
+
+```text
 08:07:03.177 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 08 - Demo Flux.skip -- skip number of elements from provider
 08:07:03.181 [main] INFO com.bsoft.reactive.ReactiveTutorial -- Number of elements in flux: 4
 COBOL
 C++
+```
+### 09 - Demo Flux.skip -- skip with delay
+```bash
+````
+
+```text
 08:07:03.182 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 09 - Demo Flux.skip -- skip with delay
 08:07:03.191 [main] INFO reactor.Flux.ConcatMapNoPrefetch.1 -- onSubscribe(FluxConcatMapNoPrefetch.FluxConcatMapNoPrefetchSubscriber)
 08:07:03.191 [main] INFO reactor.Flux.ConcatMapNoPrefetch.1 -- request(unbounded)
@@ -118,12 +178,30 @@ COBOL
 08:07:07.196 [parallel-4] INFO reactor.Flux.ConcatMapNoPrefetch.1 -- onNext(C++)
 C++
 08:07:07.197 [parallel-4] INFO reactor.Flux.ConcatMapNoPrefetch.1 -- onComplete()
+```
+### 10 - Demo Flux.skip -- skip with delay on skip
+```bash
+````
+
+```text
 08:07:13.194 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 10 - Demo Flux.skip -- skip with delay on skip
 COBOL
 C++
+```
+### 11 - Demo Flux.skipLast
+```bash
+````
+
+```text
 08:07:23.195 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 11 - Demo Flux.skipLast
 Dart
 Javascript
+```
+### 12 - Demo Flux.range
+```bash
+````
+
+```text
 08:07:23.197 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 12 - Demo Flux.range
 1
 2
@@ -145,6 +223,12 @@ Javascript
 18
 19
 20
+```
+### 13 - Demo Flux.skipWhile
+```bash
+````
+
+```text
 08:07:23.197 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 13 - Demo Flux.skipWhile
 10
 11
@@ -157,6 +241,12 @@ Javascript
 18
 19
 20
+```
+### 14 - Demo Flux.skipUntil
+```bash
+````
+
+```text
 08:07:23.198 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 14 - Demo Flux.skipUntil
 10
 11
@@ -169,6 +259,12 @@ Javascript
 18
 19
 20
+```
+### 15 - Demo Flux.concat
+```bash
+````
+
+```text
 08:07:23.198 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 15 - Demo Flux.concat
 1
 2
@@ -210,6 +306,12 @@ Javascript
 118
 119
 120
+```
+### 16 - Demo Flux.merge
+```bash
+````
+
+```text
 08:07:23.199 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 16 - Demo Flux.merge
 1
 2
@@ -251,6 +353,12 @@ Javascript
 118
 119
 120
+```
+### 17 - Demo Flux.merge with delay
+```bash
+````
+
+```text
 08:07:23.200 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 17 - Demo Flux.merge with delay
 1
 101
@@ -292,6 +400,12 @@ Javascript
 119
 20
 120
+```
+### 18 - Demo Flux.zip
+```bash
+````
+
+```text
 08:07:26.201 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 18 - Demo Flux.zip
 [1,101]
 [2,102]
@@ -313,6 +427,12 @@ Javascript
 [18,118]
 [19,119]
 [20,120]
+```
+### 19 - Demo Flux.zip 4 streams
+```bash
+````
+
+```text
 08:07:26.202 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 19 - Demo Flux.zip 4 streams
 [1,101,501,1001]
 [2,102,502,1002]
@@ -329,25 +449,67 @@ Javascript
 [13,113,513,1013]
 [14,114,514,1014]
 [15,115,515,1015]
+```
+### 20 - Demo Flux.zip 2 flux 1 mono
+```bash
+````
+
+```text
 08:07:26.203 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 20 - Demo Flux.zip 2 flux 1 mono
 [1,101,5]
+```
+### 21 - Demo Flux.collectList
+```bash
+````
+
+```text
 08:07:26.204 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 21 - Demo Flux.collectList
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+```
+### 22 - Demo Flux.collectList1
+```bash
+````
+
+```text
 08:07:26.205 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 22 - Demo Flux.collectList1
 08:07:26.205 [main] INFO com.bsoft.reactive.ReactiveTutorial -- Start collectList1
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 08:07:26.205 [main] INFO com.bsoft.reactive.ReactiveTutorial -- End   collectList1
+```
+### 23 - Demo Flux.collectList2
+```bash
+````
+
+```text
 08:07:26.205 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 23 - Demo Flux.collectList2
 08:07:26.205 [main] INFO com.bsoft.reactive.ReactiveTutorial -- Start collectList2
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 08:07:31.213 [main] INFO com.bsoft.reactive.ReactiveTutorial -- End   collectList2
+```
+### 24 - Demo Flux.buffer
+```bash
+````
+
+```text
 08:07:31.213 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 24 - Demo Flux.buffer
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+### 25 - Demo Flux.buffer with maximum value 3
+```bash
+````
+
+```text
 08:07:34.214 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 25 - Demo Flux.buffer with maximum value 3
 [1, 2, 3]
 [4, 5, 6]
 [7, 8, 9]
 [10]
+```
+### 26 - Demo Flux.buffer with delay of 500ms
+```bash
+````
+
+```text
 08:07:37.215 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 26 - Demo Flux.buffer with delay of 500ms
 [1]
 [2, 3]
@@ -355,8 +517,20 @@ Javascript
 [6, 7]
 [8, 9]
 [10]
+```
+### 27 - Demo Flux.collectMap
+```bash
+````
+
+```text
 08:07:40.217 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 27 - Demo Flux.collectMap
 {1=1, 2=4, 3=9, 4=16, 5=25, 6=36, 7=49, 8=64, 9=81, 10=100}
+```
+### 28 - Demo Flux.doOnEach
+```bash
+````
+
+```text
 08:07:40.219 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 28 - Demo Flux.doOnEach
 Signal: doOnEach_onNext(1)
 Signal: doOnEach_onNext(2)
@@ -369,6 +543,12 @@ Signal: doOnEach_onNext(8)
 Signal: doOnEach_onNext(9)
 Signal: doOnEach_onNext(10)
 Signal: onComplete()
+```
+### 29 - Demo Flux.doOnEach
+```bash
+````
+
+```text
 08:07:40.220 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 29 - Demo Flux.doOnEach
 Signal value: 1
 Signal value: 2
@@ -381,6 +561,12 @@ Signal value: 8
 Signal value: 9
 Signal value: 10
 Ready
+```
+### 30 - Demo Flux.doOnComplete
+```bash
+````
+
+```text
 08:07:40.221 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 30 - Demo Flux.doOnComplete
 1
 2
@@ -393,6 +579,12 @@ Ready
 9
 10
 Ready
+```
+### 31 - Demo Flux.doOnNext
+```bash
+````
+
+```text
 08:07:40.222 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 31 - Demo Flux.doOnNext
 Value: 1
 1
@@ -414,6 +606,12 @@ Value: 9
 9
 Value: 10
 10
+```
+### 32 - Demo Flux.doOnSubscribe
+```bash
+````
+
+```text
 08:07:40.222 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 32 - Demo Flux.doOnSubscribe
 Subscribed
 1
@@ -426,16 +624,29 @@ Subscribed
 8
 9
 10
+```
+### 33 - Demo Flux.doOnCancel
+```bash
+````
+
+```text
 08:07:40.223 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 33 - Demo Flux.doOnCancel
 1
 2
 3
 Cancelled
+```
+### 34 - Demo Flux.doOnError
+```bash
+````
+
+```text
 08:07:40.977 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 34 - Demo Flux.doOnError
 1
 2
 3
 4
+
 08:07:40.977 [main] ERROR reactor.core.publisher.Operators -- Operator called default onErrorDropped
 reactor.core.Exceptions$ErrorCallbackNotImplemented: java.lang.RuntimeException: Error on integer: 5
 Caused by: java.lang.RuntimeException: Error on integer: 5
@@ -453,6 +664,12 @@ Caused by: java.lang.RuntimeException: Error on integer: 5
 	at reactor.core.publisher.Flux.subscribe(Flux.java:8780)
 	at reactor.core.publisher.Flux.subscribe(Flux.java:8723)
 	at com.bsoft.reactive.ReactiveTutorial.main(ReactiveTutorial.java:513)
+```
+### 35 - Demo Flux.doOnError1
+```bash
+````
+
+```text
 08:07:40.978 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 35 - Demo Flux.doOnError1
 1
 2
@@ -465,18 +682,36 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 8
 9
 10
+```
+### 36 - Demo Flux.doOnErrorReturn
+```bash
+````
+
+```text
 08:07:40.981 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 36 - Demo Flux.doOnErrorReturn
 1
 2
 3
 4
 -1
+```
+### 37 - Demo Flux.doOnErrorReturn1
+```bash
+````
+
+```text
 08:07:40.982 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 37 - Demo Flux.doOnErrorReturn1
 1
 2
 3
 4
 -1
+```
+### 38 - Demo Flux.doOnErrorResume
+```bash
+````
+
+```text
 08:07:40.983 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 38 - Demo Flux.doOnErrorResume
 1
 2
@@ -487,6 +722,12 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 102
 103
 104
+```
+### 39 - Demo Flux.doOnErrorMap
+```bash
+````
+
+```text
 08:07:40.984 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 39 - Demo Flux.doOnErrorMap
 1
 2
