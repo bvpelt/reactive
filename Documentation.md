@@ -127,3 +127,21 @@ git push origin step-01
 git tag -a vstep-01 -m "step-01 Mono"
 git push origin vstep-01
 ```
+
+# Mongodb
+
+Use docker to setup a mongodb image using a [docker-compose](./docker-compose.yaml) file.
+
+Use mongo compas to view the database content
+
+```bash
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.8_amd64.deb
+sudo dpkg -i mongodb-compass_1.46.8_amd64.deb
+
+# Start mongodb docker image from directory which contains docker-compose.yaml
+docker compose up
+
+# Connect to db
+mongodb-compass mongodb://localhost:27017/
+
+```
