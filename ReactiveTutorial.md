@@ -163,6 +163,17 @@ C++
 ```
 ### 09 - Demo Flux.skip -- skip with delay
 ```bash
+private Flux<String> testSkipDuration() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++");
+
+    return flux.delayElements(Duration.ofSeconds(1))
+            .log();
+}
+
+reactiveTutorial.testSkipDuration()
+        .subscribe(System.out::println);
+Thread.sleep(10000);
 ````
 
 ```text
@@ -181,6 +192,19 @@ C++
 ```
 ### 10 - Demo Flux.skip -- skip with delay on skip
 ```bash
+private Flux<String> testSkipDuration01() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++")
+            .delayElements(Duration.ofSeconds(1));
+
+    return flux.skip(Duration.ofMillis(2010));
+
+}
+
+log.info("10 - Demo Flux.skip -- skip with delay on skip");
+reactiveTutorial.testSkipDuration01()
+        .subscribe(System.out::println);
+Thread.sleep(10000);
 ````
 
 ```text
@@ -190,6 +214,17 @@ C++
 ```
 ### 11 - Demo Flux.skipLast
 ```bash
+private Flux<String> testSkipLast() {
+
+    Flux<String> flux = Flux.just("Dart", "Javascript", "COBOL", "C++");
+
+    // Skip the last two elements of the Flux
+    return flux.skipLast(2);
+}
+
+log.info("11 - Demo Flux.skipLast");
+reactiveTutorial.testSkipLast()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -199,6 +234,17 @@ Javascript
 ```
 ### 12 - Demo Flux.range
 ```bash
+private Flux<Integer> testSkipRange() {
+
+    Flux<Integer> flux = Flux.range(1, 20);
+
+    // return range
+    return flux;
+}
+
+log.info("12 - Demo Flux.range");
+reactiveTutorial.testSkipRange()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -226,6 +272,18 @@ Javascript
 ```
 ### 13 - Demo Flux.skipWhile
 ```bash
+private Flux<Integer> testSkipWhile() {
+
+    Flux<Integer> flux = Flux.range(1, 20);
+
+    // Skip all elements which apply to the condition
+    return flux.skipWhile(i -> i < 10);
+}
+
+log.info("13 - Demo Flux.skipWhile");
+reactiveTutorial.testSkipWhile()
+        .subscribe(System.out::println);
+
 ````
 
 ```text
@@ -244,6 +302,17 @@ Javascript
 ```
 ### 14 - Demo Flux.skipUntil
 ```bash
+private Flux<Integer> testSkipUntil() {
+
+    Flux<Integer> flux = Flux.range(1, 20);
+
+    // Skip all elements which apply to the condition
+    return flux.skipUntil(i -> i == 10);
+}
+
+log.info("14 - Demo Flux.skipUntil");
+reactiveTutorial.testSkipUntil()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -262,6 +331,18 @@ Javascript
 ```
 ### 15 - Demo Flux.concat
 ```bash
+private Flux<Integer> testConcat() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20);
+    Flux<Integer> flux2 = Flux.range(101, 20);
+
+    // Concat the fluxes
+    return Flux.concat(flux1, flux2);
+}
+
+log.info("15 - Demo Flux.concat");
+reactiveTutorial.testConcat()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -309,6 +390,19 @@ Javascript
 ```
 ### 16 - Demo Flux.merge
 ```bash
+private Flux<Integer> testMerge() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20);
+    Flux<Integer> flux2 = Flux.range(101, 20);
+
+    // Merge the fluxes
+    return Flux.merge(flux1, flux2);
+}
+
+log.info("16 - Demo Flux.merge");
+reactiveTutorial.testMerge()
+        .subscribe(System.out::println);
+
 ````
 
 ```text
@@ -356,6 +450,19 @@ Javascript
 ```
 ### 17 - Demo Flux.merge with delay
 ```bash
+private Flux<Integer> testMergeDelay() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20).delayElements(Duration.ofMillis(20));
+    Flux<Integer> flux2 = Flux.range(101, 20).delayElements(Duration.ofMillis(20));
+
+    // Merge the fluxes
+    return Flux.merge(flux1, flux2);
+}
+
+log.info("17 - Demo Flux.merge with delay");
+reactiveTutorial.testMergeDelay()
+        .subscribe(System.out::println);
+Thread.sleep(3000);
 ````
 
 ```text
@@ -403,6 +510,19 @@ Javascript
 ```
 ### 18 - Demo Flux.zip
 ```bash
+private Flux<Tuple2<Integer, Integer>> testZip() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20);
+    Flux<Integer> flux2 = Flux.range(101, 20);
+
+    // Zip the fluxes, both fluxes need to have the same number of elements.
+    // The output will stop when one of the fluxes has no more data to zip.
+    return Flux.zip(flux1, flux2);
+}
+
+log.info("18 - Demo Flux.zip");
+reactiveTutorial.testZip()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -430,6 +550,21 @@ Javascript
 ```
 ### 19 - Demo Flux.zip 4 streams
 ```bash
+private Flux<Tuple4<Integer, Integer, Integer, Integer>> testZipFour() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20);
+    Flux<Integer> flux2 = Flux.range(101, 22);
+    Flux<Integer> flux3 = Flux.range(501, 18);
+    Flux<Integer> flux4 = Flux.range(1001, 15);
+
+    // Zip the fluxes, both fluxes need to have the same number of elements.
+    // The output will stop when one of the fluxes has no more data to zip.
+    return Flux.zip(flux1, flux2, flux3, flux4);
+}
+
+log.info("19 - Demo Flux.zip 4 streams");
+reactiveTutorial.testZipFour()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -452,6 +587,21 @@ Javascript
 ```
 ### 20 - Demo Flux.zip 2 flux 1 mono
 ```bash
+private Flux<Tuple3<Integer, Integer, Integer>> testComplexZip() {
+
+    Flux<Integer> flux1 = Flux.range(1, 20);
+    Flux<Integer> flux2 = Flux.range(101, 22);
+    Mono<Integer> mono = Mono.just(5);
+
+
+    // Zip the fluxes, both fluxes need to have the same number of elements.
+    // The output will stop when one of the fluxes has no more data to zip.
+    return Flux.zip(flux1, flux2, mono);
+}
+
+log.info("20 - Demo Flux.zip 2 flux 1 mono");
+reactiveTutorial.testComplexZip()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -460,6 +610,17 @@ Javascript
 ```
 ### 21 - Demo Flux.collectList
 ```bash
+private Mono<List<Integer>> testCollectList() {
+
+    Flux<Integer> flux = Flux.range(1, 20);
+
+    // From a number of elements create 1 list which contains all the elements
+    return flux.collectList();
+}
+
+log.info("21 - Demo Flux.collectList");
+reactiveTutorial.testCollectList()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -468,6 +629,16 @@ Javascript
 ```
 ### 22 - Demo Flux.collectList1
 ```bash
+private List<Integer> testCollectList1() {
+
+    // From a number of elements create 1 list which contains all the elements
+    return testCollectList().block();
+}
+
+log.info("22 - Demo Flux.collectList1");
+log.info("Start collectList1");
+System.out.println(reactiveTutorial.testCollectList1());
+log.info("End   collectList1");
 ````
 
 ```text
@@ -478,6 +649,18 @@ Javascript
 ```
 ### 23 - Demo Flux.collectList2
 ```bash
+private List<Integer> testCollectList2() {
+    Flux<Integer> flux = Flux.range(1, 20)
+            .delayElements(Duration.ofMillis(250));
+
+    // From a number of elements create 1 list which contains all the elements
+    return flux.collectList().block();
+}
+
+log.info("23 - Demo Flux.collectList2");
+log.info("Start collectList2");
+System.out.println(reactiveTutorial.testCollectList2());
+log.info("End   collectList2");
 ````
 
 ```text
@@ -488,6 +671,19 @@ Javascript
 ```
 ### 24 - Demo Flux.buffer
 ```bash
+private Flux<List<Integer>> testBuffer() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .delayElements(Duration.ofMillis(250));
+
+    // From a number of elements create a number of lists in a buffer
+    return flux.buffer();
+}
+
+log.info("24 - Demo Flux.buffer");
+reactiveTutorial.testBuffer()
+        .subscribe(System.out::println);
+Thread.sleep(3000);
+
 ````
 
 ```text
@@ -496,6 +692,18 @@ Javascript
 ```
 ### 25 - Demo Flux.buffer with maximum value 3
 ```bash
+private Flux<List<Integer>> testBuffer1(int maxelements) {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .delayElements(Duration.ofMillis(250));
+
+    // From a number of elements create a number of lists in a buffer with maximum 3 elements
+    return flux.buffer(maxelements);
+}
+
+log.info("25 - Demo Flux.buffer with maximum value 3");
+reactiveTutorial.testBuffer1(3)
+        .subscribe(System.out::println);
+Thread.sleep(3000);
 ````
 
 ```text
@@ -507,6 +715,18 @@ Javascript
 ```
 ### 26 - Demo Flux.buffer with delay of 500ms
 ```bash
+private Flux<List<Integer>> testBuffer2(int delay) {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .delayElements(Duration.ofMillis(250));
+
+    // From a number of elements create a number of lists in a buffer after delay of 500ms
+    return flux.buffer(Duration.ofMillis(delay));
+}
+
+log.info("26 - Demo Flux.buffer with delay of 500ms");
+reactiveTutorial.testBuffer2(500)
+        .subscribe(System.out::println);
+Thread.sleep(3000);
 ````
 
 ```text
@@ -520,6 +740,16 @@ Javascript
 ```
 ### 27 - Demo Flux.collectMap
 ```bash
+private Mono<Map<Integer, Integer>> testCollectMap() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements create a single map with <a, a*a> for each element
+    return flux.collectMap(integer -> integer, integer -> integer * integer);
+}
+
+log.info("27 - Demo Flux.collectMap");
+reactiveTutorial.testCollectMap()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -528,6 +758,16 @@ Javascript
 ```
 ### 28 - Demo Flux.doOnEach
 ```bash
+private Flux<Integer> testDoOnEach() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements in a Flux for each element in the flux show the signal
+    return flux.doOnEach(signal -> System.out.println("Signal: " + signal));
+}
+
+log.info("28 - Demo Flux.doOnEach");
+reactiveTutorial.testDoOnEach()
+        .subscribe();
 ````
 
 ```text
@@ -546,6 +786,22 @@ Signal: onComplete()
 ```
 ### 29 - Demo Flux.doOnEach
 ```bash
+private Flux<Integer> testDoOnEach1() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements in a Flux for each element in the flux show the signal
+    return flux.doOnEach(signal -> {
+        if (signal.getType() == SignalType.ON_COMPLETE) {
+            System.out.println("Ready");
+        } else {
+            System.out.println("Signal value: " + signal.get());
+        }
+    });
+}
+
+log.info("29 - Demo Flux.doOnEach");
+reactiveTutorial.testDoOnEach1()
+        .subscribe();
 ````
 
 ```text
@@ -564,6 +820,16 @@ Ready
 ```
 ### 30 - Demo Flux.doOnComplete
 ```bash
+private Flux<Integer> testDoOnComplete() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements in a Flux for the complete signal
+    return flux.doOnComplete(() -> System.out.println("Ready"));
+}
+
+log.info("30 - Demo Flux.doOnComplete");
+reactiveTutorial.testDoOnComplete()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -582,6 +848,16 @@ Ready
 ```
 ### 31 - Demo Flux.doOnNext
 ```bash
+private Flux<Integer> testDoOnNext() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements in a Flux for each value -- instead of each signal as in dooneach -- process the value
+    return flux.doOnNext(integer -> System.out.println("Value: " + integer));
+}
+
+log.info("31 - Demo Flux.doOnNext");
+reactiveTutorial.testDoOnNext()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -609,6 +885,16 @@ Value: 10
 ```
 ### 32 - Demo Flux.doOnSubscribe
 ```bash
+private Flux<Integer> testDoOnSubscribe() {
+    Flux<Integer> flux = Flux.range(1, 10);
+
+    // From a number of elements in a Flux on the subscribe event do specified action
+    return flux.doOnSubscribe(subscription -> System.out.println("Subscribed"));
+}
+
+log.info("32 - Demo Flux.doOnSubscribe");
+reactiveTutorial.testDoOnSubscribe()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -627,6 +913,19 @@ Subscribed
 ```
 ### 33 - Demo Flux.doOnCancel
 ```bash
+private Flux<Integer> testDoOnCancel(int msDelay) {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .delayElements(Duration.ofMillis(msDelay));
+
+    // From a number of elements in a Flux on the cancel event do specified action
+    return flux.doOnCancel(() -> System.out.println("Cancelled"));
+}
+
+log.info("33 - Demo Flux.doOnCancel");
+Disposable disposable = reactiveTutorial.testDoOnCancel(250)  // 250 ms delay between elements
+        .subscribe(System.out::println);
+Thread.sleep(752);
+disposable.dispose();
 ````
 
 ```text
@@ -638,6 +937,22 @@ Cancelled
 ```
 ### 34 - Demo Flux.doOnError
 ```bash
+private Flux<Integer> testDoOnError() { // Generate exception
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Error on integer: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux;
+}
+
+log.info("34 - Demo Flux.doOnError");
+reactiveTutorial.testDoOnError()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -667,6 +982,26 @@ Caused by: java.lang.RuntimeException: Error on integer: 5
 ```
 ### 35 - Demo Flux.doOnError1
 ```bash
+private Flux<Integer> testDoOnError1() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Invalid number: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux
+            .onErrorContinue((throwable, o) -> {
+                System.out.println("Although error: " + throwable.getMessage() + " occurred don't worry about: " + o);
+                log.error("Although error: {} occurred on value: {} continue", throwable.getMessage(), o);
+            });
+}
+
+log.info("35 - Demo Flux.doOnError1");
+reactiveTutorial.testDoOnError1()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -685,6 +1020,23 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 ```
 ### 36 - Demo Flux.doOnErrorReturn
 ```bash
+private Flux<Integer> testDoOnErrorReturn() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Invalid number: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux
+            .onErrorReturn(-1); // return special value -1 and stop processing
+}
+
+log.info("36 - Demo Flux.doOnErrorReturn");
+reactiveTutorial.testDoOnErrorReturn()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -697,6 +1049,27 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 ```
 ### 37 - Demo Flux.doOnErrorReturn1
 ```bash
+private Flux<Integer> testDoOnErrorReturn1() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Invalid number: " + integer);
+                }
+                if (integer == 6) {
+                    throw new ArithmeticException("Arithmetic Exception: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux
+            .onErrorReturn(RuntimeException.class, -1)
+            .onErrorReturn(ArithmeticException.class, -2); // return special value -1 and stop processing
+}
+
+log.info("37 - Demo Flux.doOnErrorReturn1");
+reactiveTutorial.testDoOnErrorReturn1()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -709,6 +1082,23 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 ```
 ### 38 - Demo Flux.doOnErrorResume
 ```bash
+private Flux<Integer> testDoOnErrorResume() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Invalid number: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux
+            .onErrorResume(throwable -> Flux.range(100, 5));
+}
+
+log.info("38 - Demo Flux.doOnErrorResume");
+reactiveTutorial.testDoOnErrorResume()
+        .subscribe(System.out::println);
 ````
 
 ```text
@@ -725,6 +1115,23 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 ```
 ### 39 - Demo Flux.doOnErrorMap
 ```bash
+private Flux<Integer> testDoOnErrorMap() {
+    Flux<Integer> flux = Flux.range(1, 10)
+            .map(integer -> {
+                if (integer == 5) {
+                    throw new RuntimeException("Invalid number: " + integer);
+                } else {
+                    return integer;
+                }
+            });
+
+    return flux
+            .onErrorMap(throwable -> new UnsupportedOperationException(throwable.getMessage()));
+}
+
+log.info("39 - Demo Flux.doOnErrorMap");
+reactiveTutorial.testDoOnErrorMap()
+        .subscribe(System.out::println);
 ````
 
 ```text
