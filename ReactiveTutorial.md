@@ -11,15 +11,82 @@
 > Task :classes
 
 > Task :com.bsoft.reactive.ReactiveTutorial.main()
+```
+### 01 - Demo Mono test
+```bash
+private Mono<String> testMono() {  // This is the publisher
+  return Mono.just("Java");        // wrap the string in Mono
+}
+
+log.info("01 - Demo Mono test");
+reactiveTutorial.testMono(); // will nog work there is no subscription yet. When running the program exits immeadiately
+// the compiler gives a warning: Value is never used as Publisher
+```
+
+```text
 08:07:03.085 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 01 - Demo Mono test
+```
+### 02 - Demo Mono test subscribe
+```bash
+private Mono<String> testMono() {  // This is the publisher
+  return Mono.just("Java");        // wrap the string in Mono
+}
+
+log.info("02 - Demo Mono test subscribe");
+reactiveTutorial.testMono()
+        .subscribe();        // Data is generated, but the subscriber is not using the data
+```
+
+```text
 08:07:03.121 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 02 - Demo Mono test subscribe
+```
+### 03 - Demo Mono.just
+```bash
+private Mono<String> testMono() {  // This is the publisher
+  return Mono.just("Java");        // wrap the string in Mono
+}
+
+log.info("03 - Demo Mono.just");
+reactiveTutorial.testMono()
+        .subscribe(System.out::println);
+```
+
+```text
 08:07:03.126 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 03 - Demo Mono.just
 Java
+```
+### 04 - Demo Flux.just
+```bash
+private Flux<String> testFlux() {
+    return Flux.just("Java", "Cpp", "Python", "Rust");
+}
+
+log.info("04 - Demo Flux.just");
+reactiveTutorial.testFlux()
+        .subscribe(System.out::println);
+````
+
+```text
 08:07:03.127 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 04 - Demo Flux.just
 Java
 Cpp
 Python
 Rust
+```
+### 05 - Demo Flux.fromIterable
+```bash
+private Flux<String> testFlux01() {
+    List<String> programmingLanguages = List.of("Dart", "Javascript", "COBOL", "C++");
+
+    return Flux.fromIterable(programmingLanguages);
+}
+
+log.info("05 - Demo Flux.fromIterable");
+reactiveTutorial.testFlux01()
+        .subscribe(System.out::println);
+````
+
+```text
 08:07:03.171 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 05 - Demo Flux.fromIterable
 Dart
 Javascript

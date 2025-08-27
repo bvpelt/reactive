@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -44,5 +47,28 @@ public class DataController {
         // Save to database
         return reactiveMongoTemplate.save(order);
     }
-    
+
+    /*
+    Return summary consisting of:
+    customer name, total order price
+     */
+    @GetMapping("/sales/summary")
+    public Mono<Map<String, Double>> calculateSummary() {
+        return reactiveMongoTemplate.findAll(Customer.class)
+                .flatMap(customer -> Mono.zip(Mono.just(customer), calculateOrderSum(customer.getId())))
+                .collectMap(tuple2 -> tuple2.getT1().getName(), Tuple2::getT2)
+//                .log()
+                ;
+    }
+
+    private Mono<Double> calculateOrderSum(String customerId) {
+        Criteria criteria = Criteria.where("customerId").is(customerId);
+        return reactiveMongoTemplate.find(Query.query(criteria), Order.class)
+                .map(Order::getTotal)
+                .reduce(0d, Double::sum)
+//                .log()
+                ;
+
+    }
+
 }

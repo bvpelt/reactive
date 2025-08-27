@@ -151,3 +151,8 @@ The difference between `@Controller` and `@RestController` is:
 - Controller is used to redirect to a html page
 - RestControlles give json responses
 
+## Experience
+Reactive programs are hard to:
+- write
+- debug
+- give good resource usage (lesser server cost)
