@@ -68,7 +68,6 @@ public class DataController {
                 .reduce(0d, Double::sum)
 //                .log()
                 ;
-
     }
 
 }

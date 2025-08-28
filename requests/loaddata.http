@@ -1,0 +1,201 @@
+### Create a new customer and extract their ID
+POST http://localhost:8080/customer/create
+Content-Type: application/json
+
+{
+  "name": "Peter van Proosdij",
+  "job": "Enterprise Architect"
+}
+
+> {%
+    // Access the JSON body of the response and get the 'id' field
+    const customerId = response.body.id;
+
+    // Set a global variable to be used in subsequent requests
+    client.global.set("customerId", customerId);
+%}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 100,
+  "discount": 0.5
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 200,
+  "discount": 1
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 300,
+  "discount": 2
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 500,
+  "discount": 5
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 1000,
+  "discount": 10
+}
+
+
+### Create a new customer and extract their ID
+POST http://localhost:8080/customer/create
+Content-Type: application/json
+
+{
+  "name": "Bas Crompvoets",
+  "job": "Domain Architect"
+}
+
+> {%
+    // Access the JSON body of the response and get the 'id' field
+    const customerId = response.body.id;
+
+    // Set a global variable to be used in subsequent requests
+    client.global.set("customerId", customerId);
+%}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 200,
+  "discount": 0.5
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 250,
+  "discount": 1
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 300,
+  "discount": 2
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 350,
+  "discount": 5
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 500,
+  "discount": 10
+}
+
+### Create a new customer and extract their ID
+POST http://localhost:8080/customer/create
+Content-Type: application/json
+
+{
+  "name": "Rik Sprenkels",
+  "job": "Software Architect"
+}
+
+> {%
+    // Access the JSON body of the response and get the 'id' field
+    const customerId = response.body.id;
+
+    // Set a global variable to be used in subsequent requests
+    client.global.set("customerId", customerId);
+%}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 10,
+  "discount": 0
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 20,
+  "discount": 0
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 30,
+  "discount": 1
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 50,
+  "discount": 1
+}
+
+### Create an order using the extracted customer ID
+POST http://localhost:8080/order/create
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "total": 100,
+  "discount": 2
+}

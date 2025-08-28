@@ -133,11 +133,15 @@ git push origin vstep-01
 Use docker to setup a mongodb image using a [docker-compose](./docker-compose.yaml) file.
 
 Use mongo compas to view the database content
-
+## Ubuntu
 ```bash
 wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.8_amd64.deb
 sudo dpkg -i mongodb-compass_1.46.8_amd64.deb
-
+```
+## Windows
+Get mongo compass using https://www.mongodb.com/docs/compass/install/?operating-system=windows
+## Startup
+```bash
 # Start mongodb docker image from directory which contains docker-compose.yaml
 docker compose up
 
