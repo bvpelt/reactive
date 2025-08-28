@@ -160,3 +160,15 @@ Reactive programs are hard to:
 - write
 - debug
 - give good resource usage (lesser server cost)
+
+## Backpressure
+In case the publisher has a request flow greater than the consumer can handle there is backpressure.
+
+Needed is:
+- flow control
+  - allows the system to control the pace of data flows based on the consumer capacity
+  - ensures the producer doesn't send more data than the consumer can handle
+- preven overloading
+  - protects the application from running out of memory or crashing due to too much incoming data
+  - essential for systems dealing with large or infinite data streams
+- enhanced scalability and stability
