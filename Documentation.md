@@ -172,3 +172,21 @@ Needed is:
   - protects the application from running out of memory or crashing due to too much incoming data
   - essential for systems dealing with large or infinite data streams
 - enhanced scalability and stability
+
+## Advantages
+
+- Lower Thread Usage
+  - Uses fewer thread compared to traditional blocking models
+  - Efficiently handles request with a small, fixed number of threads
+- Optimized for System Resources
+  - Consumes less memory and CPU resources
+  - Enables running more applications on the same hardware, reducing infrastructure cost
+- Enhanced for Cloud and Container Environments
+  - Ideal for microservices architecture, often deployed in cloud or containerized environments
+
+- Better for streaming data
+  - Integration with reactive libraries
+    - seamlessly integrates with reactive programming libraries like Project Reactor, RxJava which provide tools and operators for effective stream processing
+    - offers a range of functionalities for data transformation, filtering and aggregation in streaming scenarios
+  - Efficient Handling of Data Streams
+  - Real-time data processing
