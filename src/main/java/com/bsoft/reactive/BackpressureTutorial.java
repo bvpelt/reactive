@@ -15,12 +15,9 @@ public class BackpressureTutorial {
     private Flux<Long> createNoOverflowFlux() {
         return Flux.range(1, Integer.MAX_VALUE)
                 .log()
-                .concatMap(x -> Mono.delay(Duration.ofMillis(100))) // simulate that processing takes time
-                .timeout(Duration.ofSeconds(4)) // Stop after 10 seconds
-                .onErrorResume(throwable -> {
-                    log.info("Flux stopped due to timeout");
-                   return Flux.empty(); // Complete gracefully
-                });
+                .concatMap(x -> Mono.delay(Duration.ofMillis(100)).thenReturn((long) x)) // simulate processing time
+                .take(Duration.ofSeconds(5)) // Stop after 5 seconds
+                .doOnComplete(() -> log.info("Flux completed after 5 seconds"));
     }
 
     private Flux<Long> createOverflowFlux() {
@@ -37,6 +34,7 @@ public class BackpressureTutorial {
                 .onBackpressureDrop()
                 .log()
                 .concatMap(x -> Mono.delay(Duration.ofMillis(100)).thenReturn(x)) // simulate that processing takes 100ms
+                .take(Duration.ofSeconds(5)) // Stop after 5 seconds
                 .doOnNext(x -> System.out.println("Element kept by consumer " + x));
     }
 
@@ -59,6 +57,7 @@ public class BackpressureTutorial {
                 .onBackpressureBuffer(50, BufferOverflowStrategy.DROP_LATEST)  // will drop the latest element on bufferoverflow
                 .log()
                 .concatMap(x -> Mono.delay(Duration.ofMillis(100)).thenReturn(x)) // simulate that processing takes 100ms
+                .take(Duration.ofSeconds(5)) // Stop after 5 seconds
                 .doOnNext(x -> System.out.println("Element kept by consumer: " + x));
     }
 
@@ -72,24 +71,34 @@ public class BackpressureTutorial {
                     .blockLast();
 
         log.info("02 Overflow");
-        tutorial
-                .createOverflowFlux()
-                .blockLast();
-
+        try {
+            tutorial
+                    .createOverflowFlux()
+                    .blockLast();
+        } catch (Exception ex) {
+            // continue
+        }
+        
         log.info("03 Drop elements on backpressure");
         tutorial
                 .createDropOnBackpressureFlux()
                 .blockLast();
 
-        log.info("04 Buffer elements on backpressure");
-        tutorial
-                .createBufferOnBackpressureFlux()
-                .blockLast();
+        try {
+            log.info("04 Buffer elements on backpressure");
+            tutorial
+                    .createBufferOnBackpressureFlux()
+                    .blockLast();
+        } catch (Exception ex) {
+            // continue
+        }
 
         log.info("05 Buffer elements on backpressure with bufferoverflow strategy");
         tutorial
                 .createBufferStrategyOnBackpressureFlux()
                 .blockLast();
+
+
     }
 
 }
