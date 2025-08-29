@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
@@ -53,7 +54,7 @@ public class DataController {
     customer name, total order price
      */
     @GetMapping("/sales/summary")
-    public Mono<Map<String, Double>> calculateSummary() {
+    public Mono<Map<String, Integer>> calculateSummary() {
         return reactiveMongoTemplate.findAll(Customer.class)
                 .flatMap(customer -> Mono.zip(Mono.just(customer), calculateOrderSum(customer.getId())))
                 .collectMap(tuple2 -> tuple2.getT1().getName(), Tuple2::getT2)
@@ -61,11 +62,11 @@ public class DataController {
                 ;
     }
 
-    private Mono<Double> calculateOrderSum(String customerId) {
+    private Mono<Integer> calculateOrderSum(String customerId) {
         Criteria criteria = Criteria.where("customerId").is(customerId);
         return reactiveMongoTemplate.find(Query.query(criteria), Order.class)
-                .map(Order::getTotal)
-                .reduce(0d, Double::sum)
+                .map(order -> order.getPrice().intValue())
+                .reduce(0, Integer::sum)
 //                .log()
                 ;
     }

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguratio
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-@EnableReactiveMongoRepositories
+//@EnableReactiveMongoRepositories
 public class DatabaseConfiguration extends AbstractReactiveMongoConfiguration {
 
     @Override

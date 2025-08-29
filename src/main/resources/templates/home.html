@@ -1,86 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::title}, ~{::div})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spring Boot Reactive Tutorial</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f6f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        header {
-            background: linear-gradient(135deg, #6db33f, #4aa564);
-            color: white;
-            text-align: center;
-            padding: 3rem 1rem;
-            border-bottom-left-radius: 50% 20%;
-            border-bottom-right-radius: 50% 20%;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-        }
-        header p {
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            text-align: center;
-        }
-        main h2 {
-            color: #6db33f;
-            margin-bottom: 1rem;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 0.8rem 1.5rem;
-            background: #6db33f;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
-        .btn:hover {
-            background: #4aa564;
-        }
-        footer {
-            margin-top: 3rem;
-            background: #222;
-            color: #ccc;
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.9rem;
-        }
-    </style>
+    <title>Home - Customer Order Management</title>
 </head>
 <body>
-<header>
-    <h1>Spring Boot Reactive Tutorial</h1>
-    <p>Learn how to build reactive applications with Spring WebFlux</p>
-</header>
+<div>
+    <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+        <div class="container text-center">
+            <h1 class="display-4"><i class="fas fa-rocket"></i> Customer Order Management System</h1>
+            <p class="lead">Manage your customers and orders efficiently with our reactive Spring Boot application.</p>
+            <hr class="my-4 bg-white">
+            <p>Built with Spring WebFlux, MongoDB, and Thymeleaf for a modern, responsive experience.</p>
+        </div>
+    </div>
 
-<main>
-    <h2>What you'll learn</h2>
-    <p>
-        🚀 Building non-blocking APIs with <strong>Spring WebFlux</strong><br>
-        🔄 Reactive programming with <strong>Project Reactor</strong><br>
-        🌐 Connecting to databases in a reactive way<br>
-        ⚡ Streaming data in real time
-    </p>
-    <a href="https://www.youtube.com/" target="_blank" class="btn">Watch on YouTube</a>
-</main>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-users fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Customer Management</h5>
+                    <p class="card-text">Add, edit, view, and manage customer information with ease. Track customer details and their order history.</p>
+                    <a href="/customers" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i> Manage Customers
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<footer>
-    © 2025 Spring Boot Reactive Tutorial | Made with ❤️ for Developers
-</footer>
+        <div class="col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-shopping-cart fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Order Management</h5>
+                    <p class="card-text">Create, modify, and track customer orders. Monitor order status and manage inventory efficiently.</p>
+                    <a href="/orders" class="btn btn-success">
+                        <i class="fas fa-arrow-right"></i> Manage Orders
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-chart-bar fa-3x text-info"></i>
+                    </div>
+                    <h5 class="card-title">REST API</h5>
+                    <p class="card-text">Access all functionality programmatically through our comprehensive REST API endpoints.</p>
+                    <a href="/api/customers" class="btn btn-info text-white">
+                        <i class="fas fa-code"></i> View API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h4><i class="fas fa-info-circle"></i> Quick Start</h4>
+                <ul class="mb-0">
+                    <li>Navigate to <strong>Customers</strong> to add and manage customer information</li>
+                    <li>Use <strong>Orders</strong> to create and track customer orders</li>
+                    <li>Each customer can have multiple orders associated with them</li>
+                    <li>Use the REST API endpoints for programmatic access</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

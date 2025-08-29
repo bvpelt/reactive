@@ -4,6 +4,8 @@ logging:
       apache:
         http: DEBUG
       springframework:
+        data:
+          mongodb: DEBUG
         security: INFO
         web:
           reactive:
@@ -19,5 +21,78 @@ logging:
           HttpClient: DEBUG
 
 spring:
+# Application
   application:
     name: reactive
+
+# Jackson Configuration (for JSON serialization)
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+
+# MongoDB Configuration
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: orderdb
+
+# Thymeleaf Configuration
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+
+# WebFlux Configuration
+  webflux:
+    multipart:
+      max-in-memory-size: 1MB
+      max-disk-usage-per-part: 10MB
+
+# Server Configuration
+server:
+  port: 8080
+
+# Management Configuration
+
+management:
+  server:
+    port: 8080   # expose actuator endpoints on the same port as your app
+  endpoint:
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+    health:
+      show-details: always
+    metrics:
+      access: read_only
+    prometheus:
+      access: read_only
+    shutdown:
+      access: unrestricted
+  info:
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+    java:
+      enabled: true
+    os:
+      enabled: true
+    process:
+      enabled: true
+  endpoints:
+    web:
+      path-mapping:
+        info: app-info
+        health: app-health
+      exposure:
+        include: '*'
+        exclude:

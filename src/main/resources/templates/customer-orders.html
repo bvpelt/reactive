@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<head>
+    <title>Customer Orders - Customer Order Management</title>
+</head>
+<body>
+<div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-1">
+                        <i class="fas fa-shopping-cart text-info"></i>
+                        Orders for <span class="text-primary" th:text="${customer.name}"></span>
+                    </h2>
+                    <p class="text-muted mb-0">
+                        <i class="fas fa-envelope"></i> <span th:text="${customer.email}"></span> |
+                        <i class="fas fa-phone"></i> <span th:text="${customer.phone}"></span>
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="btn-group">
+                        <a th:href="@{/orders/new(customerId=${customer.id})}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add New Order
+                        </a>
+                        <a href="/customers" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Customers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><i class="fas fa-box"></i> Product</th>
+                        <th><i class="fas fa-sort-numeric-up"></i> Quantity</th>
+                        <th><i class="fas fa-dollar-sign"></i> Unit Price</th>
+                        <th><i class="fas fa-calculator"></i> Total</th>
+                        <th><i class="fas fa-calendar"></i> Order Date</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td>
+                            <strong th:text="${order.productName}"></strong>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark" th:text="${order.quantity}"></span>
+                        </td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(order.price, 0, 2)}"></td>
+                        <td>
+                            <strong class="text-success" th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 0, 2)}"></strong>
+                        </td>
+                        <td th:text="${#temporals.format(order.orderDate, 'MMM dd, yyyy HH:mm')}"></td>
+                        <td>
+                                    <span class="badge"
+                                          th:classappend="${order.status == 'COMPLETED'} ? 'bg-success' :
+                                                         ${order.status == 'PENDING'} ? 'bg-warning text-dark' :
+                                                         ${order.status == 'PROCESSING'} ? 'bg-info' :
+                                                         ${order.status == 'SHIPPED'} ? 'bg-primary' :
+                                                         ${order.status == 'DELIVERED'} ? 'bg-success' : 'bg-danger'"
+                                          th:text="${order.status}"></span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/orders/edit/{id}(id=${order.id})}"
+                                   class="btn btn-sm btn-outline-primary" title="Edit Order">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:href="@{/orders/delete/{id}(id=${order.id})}"
+                                   class="btn btn-sm btn-outline-danger" title="Delete Order"
+                                   onclick="return confirm('Are you sure you want to delete this order?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${#lists.isEmpty(orders)}" class="text-center py-4">
+                <div class="text-muted">
+                    <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                    <h5>No Orders Found</h5>
+                    <p>This customer hasn't placed any orders yet.</p>
+                    <a th:href="@{/orders/new(customerId=${customer.id})}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create First Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

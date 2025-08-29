@@ -1,4 +1,12 @@
 package com.bsoft.reactive.repositories;
 
-public interface CustomerRepository {
+import com.bsoft.reactive.model.Customer;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
+
+@Repository
+public interface CustomerRepository extends ReactiveMongoRepository<Customer, String> {
+    Flux<Customer> findByNameContainingIgnoreCase(String name);
+    Flux<Customer> findByEmail(String email);
 }

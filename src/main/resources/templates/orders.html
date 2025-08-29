@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<head>
+    <title>Orders - Customer Order Management</title>
+</head>
+<body>
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-shopping-cart text-success"></i> All Orders</h2>
+        <a href="/orders/new" class="btn btn-success">
+            <i class="fas fa-plus"></i> Add New Order
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Customer ID</th>
+                        <th><i class="fas fa-box"></i> Product</th>
+                        <th><i class="fas fa-sort-numeric-up"></i> Qty</th>
+                        <th><i class="fas fa-dollar-sign"></i> Unit Price</th>
+                        <th><i class="fas fa-calculator"></i> Total</th>
+                        <th><i class="fas fa-calendar"></i> Order Date</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td>
+                            <code th:text="${order.customerId}"></code>
+                        </td>
+                        <td>
+                            <strong th:text="${order.productName}"></strong>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark" th:text="${order.quantity}"></span>
+                        </td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(order.price, 0, 2)}"></td>
+                        <td>
+                            <strong class="text-success" th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 0, 2)}"></strong>
+                        </td>
+                        <td th:text="${#temporals.format(order.orderDate, 'MMM dd, yyyy HH:mm')}"></td>
+                        <td>
+                            <span th:switch="${order.status}" class="badge">
+                                <span th:case="'COMPLETED'" class="bg-success" th:text="${order.status}"></span>
+                                <span th:case="'PENDING'" class="bg-warning text-dark" th:text="${order.status}"></span>
+                                <span th:case="'PROCESSING'" class="bg-info" th:text="${order.status}"></span>
+                                <span th:case="'SHIPPED'" class="bg-primary" th:text="${order.status}"></span>
+                                <span th:case="'DELIVERED'" class="bg-success" th:text="${order.status}"></span>
+                                <span th:case="'*'" class="bg-danger" th:text="${order.status}"></span>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/orders/edit/{id}(id=${order.id})}"
+                                   class="btn btn-sm btn-outline-primary" title="Edit Order">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:href="@{/orders/delete/{id}(id=${order.id})}"
+                                   class="btn btn-sm btn-outline-danger" title="Delete Order"
+                                   onclick="return confirm('Are you sure you want to delete this order?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${#lists.isEmpty(orders)}" class="text-center py-4">
+                <div class="text-muted">
+                    <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                    <h5>No Orders Found</h5>
+                    <p>No orders have been created yet.</p>
+                    <a href="/orders/new" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Create First Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

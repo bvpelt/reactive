@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<head>
+    <title>Order Form - Customer Order Management</title>
+</head>
+<body>
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-plus-circle" th:if="${order.id == null}"></i>
+                        <i class="fas fa-edit" th:if="${order.id != null}"></i>
+                        <span th:text="${order.id != null} ? 'Edit Order' : 'Add New Order'"></span>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <form th:object="${order}"
+                          th:action="${order.id} ? @{/orders/update/{id}(id=${order.id})} : @{/orders/save}"
+                          method="post">
+
+                        <div class="mb-3" th:if="${!order.id}">
+                            <label for="customerId" class="form-label">
+                                <i class="fas fa-user"></i> Customer *
+                            </label>
+                            <select class="form-select" id="customerId" th:field="*{customerId}" required>
+                                <option value="">Select a customer</option>
+                                <option th:each="customer : ${customers}"
+                                        th:value="${customer.id}"
+                                        th:text="${customer.name + ' (' + customer.email + ')'}"
+                                        th:selected="${customer.id == order.customerId}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3" th:if="${order.id}">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i> Customer ID
+                            </label>
+                            <input type="text" class="form-control" th:value="${order.customerId}" readonly>
+                            <input type="hidden" th:field="*{customerId}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">
+                                <i class="fas fa-box"></i> Product Name *
+                            </label>
+                            <input type="text" class="form-control" id="productName" th:field="*{productName}"
+                                   placeholder="Enter product name" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="quantity" class="form-label">
+                                        <i class="fas fa-sort-numeric-up"></i> Quantity *
+                                    </label>
+                                    <input type="number" class="form-control" id="quantity" th:field="*{quantity}"
+                                           min="1" placeholder="1" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">
+                                        <i class="fas fa-dollar-sign"></i> Price (per unit) *
+                                    </label>
+                                    <input type="number" class="form-control" id="price" th:field="*{price}"
+                                           step="0.01" min="0" placeholder="0.00" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">
+                                <i class="fas fa-info-circle"></i> Order Status *
+                            </label>
+                            <select class="form-select" id="status" th:field="*{status}" required>
+                                <option value="PENDING">🕐 Pending</option>
+                                <option value="PROCESSING">⚡ Processing</option>
+                                <option value="SHIPPED">🚚 Shipped</option>
+                                <option value="DELIVERED">📦 Delivered</option>
+                                <option value="COMPLETED">✅ Completed</option>
+                                <option value="CANCELLED">❌ Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-calculator"></i>
+                            <strong>Total Amount:</strong> Will be calculated automatically (Quantity × Price)
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Save Order
+                            </button>
+                            <a href="/orders" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

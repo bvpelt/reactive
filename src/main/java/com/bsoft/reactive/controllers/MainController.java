@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public Mono<String> handleMain() {
         return Mono.just("home");
     }
