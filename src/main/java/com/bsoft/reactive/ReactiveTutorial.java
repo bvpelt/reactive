@@ -185,6 +185,10 @@ public class ReactiveTutorial {
         log.info("39 - Demo Flux.doOnErrorMap");
         reactiveTutorial.testDoOnErrorMap()
                 .subscribe(System.out::println);
+
+        log.info("40 - Demo Flux.expand");
+        reactiveTutorial.testExpand()
+                .subscribe(System.out::println);
     }
 
     private Mono<String> testMono() {  // This is the publisher
@@ -529,4 +533,11 @@ public class ReactiveTutorial {
         return flux
                 .onErrorMap(throwable -> new UnsupportedOperationException(throwable.getMessage()));
     }
+
+
+    private Flux<Integer> testExpand() {
+        Flux<Integer> flux = Flux.range(1, 10);
+        return flux;
+    }
+
 }
