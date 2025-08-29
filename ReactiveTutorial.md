@@ -4,6 +4,8 @@ See https://www.youtube.com/watch?v=y3ySZkSgWik
 
 The [source code](./src/main/java/com/bsoft/reactive/ReactiveTutorial.java) gives output as shown.
 
+For documentation on reactive functions see https://projectreactor.io/docs/core/release/api/
+
 ## Output
 
 ```text
@@ -649,6 +651,11 @@ reactiveTutorial.testZip()
 [20,120]
 ```
 ### 19 - Demo Flux.zip 4 streams
+
+Using Flux.zip() on four streams
+
+![Flux zip on four streams](./images/Flux-zip-4.png)
+
 ```bash
 private Flux<Tuple4<Integer, Integer, Integer, Integer>> testZipFour() {
 
@@ -709,6 +716,11 @@ reactiveTutorial.testComplexZip()
 [1,101,5]
 ```
 ### 21 - Demo Flux.collectList
+
+Using Flux.collectList()
+
+![Flux collectlist](./images/Flux-collectlist.png)
+
 ```bash
 private Mono<List<Integer>> testCollectList() {
 
@@ -770,6 +782,11 @@ log.info("End   collectList2");
 08:07:31.213 [main] INFO com.bsoft.reactive.ReactiveTutorial -- End   collectList2
 ```
 ### 24 - Demo Flux.buffer
+
+Using Flux.buffer()
+
+![Flux buffer](./images/Flux-buffer.png)
+
 ```bash
 private Flux<List<Integer>> testBuffer() {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -791,6 +808,11 @@ Thread.sleep(3000);
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 ### 25 - Demo Flux.buffer with maximum value 3
+
+Using Flux.buffer(maxsize)
+
+![Flux bufffer maxsize](./images/Flux-buffer-maxsize.png)
+
 ```bash
 private Flux<List<Integer>> testBuffer1(int maxelements) {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -839,6 +861,11 @@ Thread.sleep(3000);
 [10]
 ```
 ### 27 - Demo Flux.collectMap
+
+Using Flux.collectMap()
+
+![Flux collectmap](./images/Flux-collectmap.png)
+
 ```bash
 private Mono<Map<Integer, Integer>> testCollectMap() {
     Flux<Integer> flux = Flux.range(1, 10);
@@ -857,6 +884,11 @@ reactiveTutorial.testCollectMap()
 {1=1, 2=4, 3=9, 4=16, 5=25, 6=36, 7=49, 8=64, 9=81, 10=100}
 ```
 ### 28 - Demo Flux.doOnEach
+
+Using Flux.doOnEach()
+
+![Flux do on each](./images/Flux-dooneach.png)
+
 ```bash
 private Flux<Integer> testDoOnEach() {
     Flux<Integer> flux = Flux.range(1, 10);
@@ -919,6 +951,11 @@ Signal value: 10
 Ready
 ```
 ### 30 - Demo Flux.doOnComplete
+
+Using Flux.doOnComplete()
+
+![Flux do on complete](./images/Flux-dooncomplete.png)
+
 ```bash
 private Flux<Integer> testDoOnComplete() {
     Flux<Integer> flux = Flux.range(1, 10);
@@ -947,6 +984,11 @@ reactiveTutorial.testDoOnComplete()
 Ready
 ```
 ### 31 - Demo Flux.doOnNext
+
+Using Flux.doOnNext()
+
+![Flux do on next](./images/Flux-doonnext.png)
+
 ```bash
 private Flux<Integer> testDoOnNext() {
     Flux<Integer> flux = Flux.range(1, 10);
@@ -984,6 +1026,11 @@ Value: 10
 10
 ```
 ### 32 - Demo Flux.doOnSubscribe
+
+Using Flux.doonsubscribe
+
+![Flux do on subscribe](./images/Flux-doonsubscribe.png)
+
 ```bash
 private Flux<Integer> testDoOnSubscribe() {
     Flux<Integer> flux = Flux.range(1, 10);
@@ -1012,6 +1059,11 @@ Subscribed
 10
 ```
 ### 33 - Demo Flux.doOnCancel
+
+Using Flux.doOnCancel()
+
+![Flux do on cancel](./images/Flux-dooncancel.png)
+
 ```bash
 private Flux<Integer> testDoOnCancel(int msDelay) {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -1036,6 +1088,7 @@ disposable.dispose();
 Cancelled
 ```
 ### 34 - Demo Flux.doOnError
+
 ```bash
 private Flux<Integer> testDoOnError() { // Generate exception
     Flux<Integer> flux = Flux.range(1, 10)
@@ -1081,6 +1134,12 @@ Caused by: java.lang.RuntimeException: Error on integer: 5
 	at com.bsoft.reactive.ReactiveTutorial.main(ReactiveTutorial.java:513)
 ```
 ### 35 - Demo Flux.doOnError1
+
+
+Using Flux.onContinue()
+
+![Flux on error continue](images/Flux-onerrorcontinue.png)
+
 ```bash
 private Flux<Integer> testDoOnError1() {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -1118,7 +1177,12 @@ Although error: Invalid number: 5 occurred don't worry about: 5
 9
 10
 ```
-### 36 - Demo Flux.doOnErrorReturn
+### 36 - Demo Flux.onErrorReturn
+
+Using Flux.onErrorReturn
+
+![Flux on error return](./images/Flux-onerrorreturn.png)
+
 ```bash
 private Flux<Integer> testDoOnErrorReturn() {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -1180,7 +1244,12 @@ reactiveTutorial.testDoOnErrorReturn1()
 4
 -1
 ```
-### 38 - Demo Flux.doOnErrorResume
+### 38 - Demo Flux.onErrorResume
+
+Using Flux.onErrorResume()
+
+![Flux on error resume](./images/Flux-onerrorresume.png)
+
 ```bash
 private Flux<Integer> testDoOnErrorResume() {
     Flux<Integer> flux = Flux.range(1, 10)
@@ -1213,7 +1282,12 @@ reactiveTutorial.testDoOnErrorResume()
 103
 104
 ```
-### 39 - Demo Flux.doOnErrorMap
+### 39 - Demo Flux.onErrorMap
+
+Using Flux.onErrorMap()
+
+![Flux on error map](./images/Flux-onerrormap.png)
+
 ```bash
 private Flux<Integer> testDoOnErrorMap() {
     Flux<Integer> flux = Flux.range(1, 10)
