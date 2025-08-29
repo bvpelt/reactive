@@ -97,12 +97,16 @@ public class WebController {
 
     @PostMapping("/orders/save")
     public Mono<String> saveOrder(@ModelAttribute Order order) {
+        log.debug("Saving order 01 {} =================================", order);
+        order.getTotalAmount();
+        log.debug("Saving order 02 {} =================================", order);
         return orderService.saveOrder(order)
                 .then(Mono.just("redirect:/orders"));
     }
 
     @PostMapping("/orders/update/{id}")
     public Mono<String> updateOrder(@PathVariable String id, @ModelAttribute Order order) {
+        order.getTotalAmount();
         return orderService.updateOrder(id, order)
                 .then(Mono.just("redirect:/orders"));
     }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<html lang="en" th:replace="~{layout :: html(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Customer Form - Customer Order Management</title>
 </head>
@@ -11,54 +11,54 @@
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">
-                        <i class="fas fa-user-plus" th:if="${!customer.id}"></i>
-                        <i class="fas fa-user-edit" th:if="${customer.id}"></i>
-                        <span th:text="${customer.id} ? 'Edit Customer' : 'Add New Customer'"></span>
+                        <i class="fas fa-user-plus" th:if="${#strings.isEmpty(customer.id)}"></i>
+                        <i class="fas fa-user-edit" th:if="${!#strings.isEmpty(customer.id)}"></i>
+                        <span th:text="${!#strings.isEmpty(customer.id)} ? 'Edit Customer' : 'Add New Customer'"></span>
                     </h4>
                 </div>
 
                 <div class="card-body">
-                    <form th:object="${customer}"
+                    <form method="post"
                           th:action="${customer.id} ? @{/customers/update/{id}(id=${customer.id})} : @{/customers/save}"
-                          method="post">
+                          th:object="${customer}">
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">
+                            <label class="form-label" for="name">
                                 <i class="fas fa-user"></i> Full Name *
                             </label>
-                            <input type="text" class="form-control" id="name" th:field="*{name}"
-                                   placeholder="Enter customer's full name" required>
+                            <input class="form-control" id="name" placeholder="Enter customer's full name" required
+                                   th:field="*{name}" type="text">
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">
+                            <label class="form-label" for="email">
                                 <i class="fas fa-envelope"></i> Email Address *
                             </label>
-                            <input type="email" class="form-control" id="email" th:field="*{email}"
-                                   placeholder="customer@example.com" required>
+                            <input class="form-control" id="email" placeholder="customer@example.com" required
+                                   th:field="*{email}" type="email">
                         </div>
 
                         <div class="mb-3">
-                            <label for="phone" class="form-label">
+                            <label class="form-label" for="phone">
                                 <i class="fas fa-phone"></i> Phone Number *
                             </label>
-                            <input type="text" class="form-control" id="phone" th:field="*{phone}"
-                                   placeholder="(123) 456-7890" required>
+                            <input class="form-control" id="phone" placeholder="(123) 456-7890" required
+                                   th:field="*{phone}" type="text">
                         </div>
 
                         <div class="mb-3">
-                            <label for="address" class="form-label">
+                            <label class="form-label" for="address">
                                 <i class="fas fa-map-marker-alt"></i> Address *
                             </label>
-                            <textarea class="form-control" id="address" th:field="*{address}"
-                                      rows="3" placeholder="Enter full address" required></textarea>
+                            <textarea class="form-control" id="address" placeholder="Enter full address"
+                                      required rows="3" th:field="*{address}"></textarea>
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
+                            <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-save"></i> Save Customer
                             </button>
-                            <a href="/customers" class="btn btn-secondary">
+                            <a class="btn btn-secondary" href="/customers">
                                 <i class="fas fa-times"></i> Cancel
                             </a>
                         </div>

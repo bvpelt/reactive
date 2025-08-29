@@ -2,7 +2,6 @@ package com.bsoft.reactive.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -39,17 +38,25 @@ public class Order {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
-        this.totalAmount = this.price.multiply(new BigDecimal(quantity));
+        getTotalAmount();
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.totalAmount = getTotalAmount();
+        getTotalAmount();
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-        this.totalAmount = getTotalAmount();
+        getTotalAmount();
     }
 
+    public BigDecimal getTotalAmount() {
+        if (this.totalAmount == null) {
+            if ((this.quantity != null) && (this.price != null)) {
+            this.totalAmount = this.price.multiply(new BigDecimal(quantity));
+            }
+        }
+        return this.totalAmount;
+    }
 }

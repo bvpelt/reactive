@@ -22,7 +22,7 @@ public class ReactiveTutorial {
 
         log.info("01 - Demo Mono test");
         reactiveTutorial.testMono(); // will not work there is no subscription yet. When running the program exits immeadiately
-                                     // the compiler gives a warning: Value is never used as Publisher
+        // the compiler gives a warning: Value is never used as Publisher
 
         log.info("02 - Demo Mono test subscribe");
         reactiveTutorial.testMono()

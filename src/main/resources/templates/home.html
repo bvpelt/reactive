@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<html lang="en" th:replace="~{layout :: html(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home - Customer Order Management</title>
 </head>
@@ -23,8 +23,9 @@
                         <i class="fas fa-users fa-3x text-primary"></i>
                     </div>
                     <h5 class="card-title">Customer Management</h5>
-                    <p class="card-text">Add, edit, view, and manage customer information with ease. Track customer details and their order history.</p>
-                    <a href="/customers" class="btn btn-primary">
+                    <p class="card-text">Add, edit, view, and manage customer information with ease. Track customer
+                        details and their order history.</p>
+                    <a class="btn btn-primary" href="/customers">
                         <i class="fas fa-arrow-right"></i> Manage Customers
                     </a>
                 </div>
@@ -38,8 +39,9 @@
                         <i class="fas fa-shopping-cart fa-3x text-success"></i>
                     </div>
                     <h5 class="card-title">Order Management</h5>
-                    <p class="card-text">Create, modify, and track customer orders. Monitor order status and manage inventory efficiently.</p>
-                    <a href="/orders" class="btn btn-success">
+                    <p class="card-text">Create, modify, and track customer orders. Monitor order status and manage
+                        inventory efficiently.</p>
+                    <a class="btn btn-success" href="/orders">
                         <i class="fas fa-arrow-right"></i> Manage Orders
                     </a>
                 </div>
@@ -53,8 +55,9 @@
                         <i class="fas fa-chart-bar fa-3x text-info"></i>
                     </div>
                     <h5 class="card-title">REST API</h5>
-                    <p class="card-text">Access all functionality programmatically through our comprehensive REST API endpoints.</p>
-                    <a href="/api/customers" class="btn btn-info text-white">
+                    <p class="card-text">Access all functionality programmatically through our comprehensive REST API
+                        endpoints.</p>
+                    <a class="btn btn-info text-white" href="/api/customers">
                         <i class="fas fa-code"></i> View API
                     </a>
                 </div>

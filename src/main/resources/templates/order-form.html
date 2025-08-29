@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<html lang="en" th:replace="~{layout :: html(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Order Form - Customer Order Management</title>
 </head>
@@ -18,20 +18,20 @@
                 </div>
 
                 <div class="card-body">
-                    <form th:object="${order}"
+                    <form method="post"
                           th:action="${order.id} ? @{/orders/update/{id}(id=${order.id})} : @{/orders/save}"
-                          method="post">
+                          th:object="${order}">
 
-                        <div class="mb-3" th:if="${!order.id}">
-                            <label for="customerId" class="form-label">
+                        <div class="mb-3" th:if="${order.id == null}">
+                            <label class="form-label" for="customerId">
                                 <i class="fas fa-user"></i> Customer *
                             </label>
-                            <select class="form-select" id="customerId" th:field="*{customerId}" required>
+                            <select class="form-select" id="customerId" required th:field="*{customerId}">
                                 <option value="">Select a customer</option>
                                 <option th:each="customer : ${customers}"
-                                        th:value="${customer.id}"
+                                        th:selected="${customer.id == order.customerId}"
                                         th:text="${customer.name + ' (' + customer.email + ')'}"
-                                        th:selected="${customer.id == order.customerId}"></option>
+                                        th:value="${customer.id}"></option>
                             </select>
                         </div>
 
@@ -39,45 +39,45 @@
                             <label class="form-label">
                                 <i class="fas fa-user"></i> Customer ID
                             </label>
-                            <input type="text" class="form-control" th:value="${order.customerId}" readonly>
-                            <input type="hidden" th:field="*{customerId}">
+                            <input class="form-control" readonly th:value="${order.customerId}" type="text">
+                            <input th:field="*{customerId}" type="hidden">
                         </div>
 
                         <div class="mb-3">
-                            <label for="productName" class="form-label">
+                            <label class="form-label" for="productName">
                                 <i class="fas fa-box"></i> Product Name *
                             </label>
-                            <input type="text" class="form-control" id="productName" th:field="*{productName}"
-                                   placeholder="Enter product name" required>
+                            <input class="form-control" id="productName" placeholder="Enter product name" required
+                                   th:field="*{productName}" type="text">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="quantity" class="form-label">
+                                    <label class="form-label" for="quantity">
                                         <i class="fas fa-sort-numeric-up"></i> Quantity *
                                     </label>
-                                    <input type="number" class="form-control" id="quantity" th:field="*{quantity}"
-                                           min="1" placeholder="1" required>
+                                    <input class="form-control" id="quantity" min="1" placeholder="1"
+                                           required th:field="*{quantity}" type="number">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">
+                                    <label class="form-label" for="price">
                                         <i class="fas fa-dollar-sign"></i> Price (per unit) *
                                     </label>
-                                    <input type="number" class="form-control" id="price" th:field="*{price}"
-                                           step="0.01" min="0" placeholder="0.00" required>
+                                    <input class="form-control" id="price" min="0" placeholder="0.00"
+                                           required step="0.01" th:field="*{price}" type="number">
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="status" class="form-label">
+                            <label class="form-label" for="status">
                                 <i class="fas fa-info-circle"></i> Order Status *
                             </label>
-                            <select class="form-select" id="status" th:field="*{status}" required>
+                            <select class="form-select" id="status" required th:field="*{status}">
                                 <option value="PENDING">🕐 Pending</option>
                                 <option value="PROCESSING">⚡ Processing</option>
                                 <option value="SHIPPED">🚚 Shipped</option>
@@ -93,10 +93,10 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-success">
+                            <button class="btn btn-success" type="submit">
                                 <i class="fas fa-save"></i> Save Order
                             </button>
-                            <a href="/orders" class="btn btn-secondary">
+                            <a class="btn btn-secondary" href="/orders">
                                 <i class="fas fa-times"></i> Cancel
                             </a>
                         </div>

@@ -3,8 +3,11 @@ POST http://localhost:8080/customer/create
 Content-Type: application/json
 
 {
-  "name": "Peter van Proosdij",
-  "job": "Enterprise Architect"
+  "name": "Peter van Proosdijk",
+  "email": "pvproos@gmail.com",
+  "phone": "+31645394959",
+  "address": "Kerkewijk 112 Veenendaal",
+  "job": "Vertegenwoordiger"
 }
 
 > {%
@@ -21,8 +24,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 100,
-  "discount": 0.5
+  "productName": "vacuumcleaner",
+  "quantity": 1,
+  "price": 300.00
 }
 
 ### Create an order using the extracted customer ID
@@ -31,8 +35,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 200,
-  "discount": 1
+  "productName": "smart tv",
+  "quantity": 3,
+  "price": 1450.00
 }
 
 ### Create an order using the extracted customer ID
@@ -41,8 +46,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 300,
-  "discount": 2
+  "productName": "iphone",
+  "quantity": 2,
+  "price": 560.00
 }
 
 ### Create an order using the extracted customer ID
@@ -51,8 +57,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 500,
-  "discount": 5
+  "productName": "drill",
+  "quantity": 1,
+  "price": 250.00
 }
 
 ### Create an order using the extracted customer ID
@@ -61,8 +68,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 1000,
-  "discount": 10
+  "productName": "skrew driver",
+  "quantity": 6,
+  "price": 12.50
 }
 
 
@@ -72,7 +80,10 @@ Content-Type: application/json
 
 {
   "name": "Bas Crompvoets",
-  "job": "Domain Architect"
+  "email": "bc@gmail.com",
+  "phone": "+31645694959",
+  "address": "Bruglaan 12 Rhenen",
+  "job": "Badmeester"
 }
 
 > {%
@@ -89,8 +100,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 200,
-  "discount": 0.5
+  "productName": "skrew driver",
+  "quantity": 4,
+  "price": 12.50
 }
 
 ### Create an order using the extracted customer ID
@@ -99,8 +111,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 250,
-  "discount": 1
+  "productName": "hammer",
+  "quantity": 2,
+  "price": 15.00
 }
 
 ### Create an order using the extracted customer ID
@@ -109,8 +122,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 300,
-  "discount": 2
+  "productName": "photo camera",
+  "quantity": 1,
+  "price": 1250.00
 }
 
 ### Create an order using the extracted customer ID
@@ -119,8 +133,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 350,
-  "discount": 5
+  "productName": "dish wasser",
+  "quantity": 1,
+  "price": 850.00
 }
 
 ### Create an order using the extracted customer ID
@@ -129,8 +144,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 500,
-  "discount": 10
+  "productName": "chair",
+  "quantity": 6,
+  "price": 75.00
 }
 
 ### Create a new customer and extract their ID
@@ -139,7 +155,10 @@ Content-Type: application/json
 
 {
   "name": "Rik Sprenkels",
-  "job": "Software Architect"
+  "email": "rs@gmail.com",
+  "phone": "+31609839959",
+  "address": "Boslaan 5 Amerongen",
+  "job": "Timmerman"
 }
 
 > {%
@@ -156,8 +175,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 10,
-  "discount": 0
+  "productName": "skrew driver",
+  "quantity": 6,
+  "price": 12.50
 }
 
 ### Create an order using the extracted customer ID
@@ -166,8 +186,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 20,
-  "discount": 0
+  "productName": "chair",
+  "quantity": 6,
+  "price": 75.00
 }
 
 ### Create an order using the extracted customer ID
@@ -176,8 +197,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 30,
-  "discount": 1
+  "productName": "hammer",
+  "quantity": 2,
+  "price": 15.00
 }
 
 ### Create an order using the extracted customer ID
@@ -186,8 +208,9 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 50,
-  "discount": 1
+  "productName": "skrews m4",
+  "quantity": 4,
+  "price": 10.00
 }
 
 ### Create an order using the extracted customer ID
@@ -196,6 +219,7 @@ Content-Type: application/json
 
 {
   "customerId": "{{customerId}}",
-  "total": 100,
-  "discount": 2
+  "productName": "tiles",
+  "quantity": 40,
+  "price": 12.50
 }

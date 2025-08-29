@@ -21,24 +21,24 @@ logging:
           HttpClient: DEBUG
 
 spring:
-# Application
+  # Application
   application:
     name: reactive
 
-# Jackson Configuration (for JSON serialization)
+  # Jackson Configuration (for JSON serialization)
   jackson:
     serialization:
       write-dates-as-timestamps: false
     time-zone: UTC
 
-# MongoDB Configuration
+  # MongoDB Configuration
   data:
     mongodb:
       host: localhost
       port: 27017
       database: orderdb
 
-# Thymeleaf Configuration
+  # Thymeleaf Configuration
   thymeleaf:
     cache: false
     mode: HTML
@@ -46,7 +46,7 @@ spring:
     servlet:
       content-type: text/html
 
-# WebFlux Configuration
+  # WebFlux Configuration
   webflux:
     multipart:
       max-in-memory-size: 1MB

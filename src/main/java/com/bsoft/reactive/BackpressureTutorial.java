@@ -1,16 +1,53 @@
 package com.bsoft.reactive;
 
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.Exceptions;
 import reactor.core.publisher.BufferOverflowStrategy;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.util.concurrent.TimeoutException;
 
 @Slf4j
 public class BackpressureTutorial {
+
+    public static void main(String[] args) {
+        BackpressureTutorial tutorial = new BackpressureTutorial();
+
+        log.info("01 No overflow");
+        tutorial
+                .createNoOverflowFlux()
+                .blockLast();
+
+        log.info("02 Overflow");
+        try {
+            tutorial
+                    .createOverflowFlux()
+                    .blockLast();
+        } catch (Exception ex) {
+            // continue
+        }
+
+        log.info("03 Drop elements on backpressure");
+        tutorial
+                .createDropOnBackpressureFlux()
+                .blockLast();
+
+        try {
+            log.info("04 Buffer elements on backpressure");
+            tutorial
+                    .createBufferOnBackpressureFlux()
+                    .blockLast();
+        } catch (Exception ex) {
+            // continue
+        }
+
+        log.info("05 Buffer elements on backpressure with bufferoverflow strategy");
+        tutorial
+                .createBufferStrategyOnBackpressureFlux()
+                .blockLast();
+
+
+    }
 
     private Flux<Long> createNoOverflowFlux() {
         return Flux.range(1, Integer.MAX_VALUE)
@@ -59,46 +96,6 @@ public class BackpressureTutorial {
                 .concatMap(x -> Mono.delay(Duration.ofMillis(100)).thenReturn(x)) // simulate that processing takes 100ms
                 .take(Duration.ofSeconds(5)) // Stop after 5 seconds
                 .doOnNext(x -> System.out.println("Element kept by consumer: " + x));
-    }
-
-
-    public static void main(String[] args) {
-        BackpressureTutorial tutorial = new BackpressureTutorial();
-
-        log.info("01 No overflow");
-            tutorial
-                    .createNoOverflowFlux()
-                    .blockLast();
-
-        log.info("02 Overflow");
-        try {
-            tutorial
-                    .createOverflowFlux()
-                    .blockLast();
-        } catch (Exception ex) {
-            // continue
-        }
-        
-        log.info("03 Drop elements on backpressure");
-        tutorial
-                .createDropOnBackpressureFlux()
-                .blockLast();
-
-        try {
-            log.info("04 Buffer elements on backpressure");
-            tutorial
-                    .createBufferOnBackpressureFlux()
-                    .blockLast();
-        } catch (Exception ex) {
-            // continue
-        }
-
-        log.info("05 Buffer elements on backpressure with bufferoverflow strategy");
-        tutorial
-                .createBufferStrategyOnBackpressureFlux()
-                .blockLast();
-
-
     }
 
 }

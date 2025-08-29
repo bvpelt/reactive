@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 @Component
 @Slf4j
-public class DataInitializer  implements CommandLineRunner {
+public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private CustomerRepository customerRepository;

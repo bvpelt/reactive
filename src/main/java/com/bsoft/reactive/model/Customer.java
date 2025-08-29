@@ -1,9 +1,10 @@
 package com.bsoft.reactive.model;
 
-import lombok.*;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;

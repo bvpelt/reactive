@@ -2,6 +2,7 @@ package com.bsoft.reactive.controllers;
 
 import com.bsoft.reactive.model.Customer;
 import com.bsoft.reactive.model.Order;
+import com.bsoft.reactive.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
@@ -19,7 +19,10 @@ import java.util.Map;
 public class DataController {
 
     @Autowired
-    ReactiveMongoTemplate reactiveMongoTemplate;
+    private ReactiveMongoTemplate reactiveMongoTemplate;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @PostMapping("/customer/create")
     public Mono<Customer> createCustomer(@RequestBody Customer customer) {
@@ -55,19 +58,29 @@ public class DataController {
      */
     @GetMapping("/sales/summary")
     public Mono<Map<String, Integer>> calculateSummary() {
+        log.debug("Start sales summary ==========================================");
+        customerRepository.findAll()
+                .subscribe(customer -> {
+                    log.debug("Found customer: {}", customer);
+                });
+        log.debug("End   sales summary ==========================================");
+
         return reactiveMongoTemplate.findAll(Customer.class)
                 .flatMap(customer -> Mono.zip(Mono.just(customer), calculateOrderSum(customer.getId())))
                 .collectMap(tuple2 -> tuple2.getT1().getName(), Tuple2::getT2)
-//                .log()
+                .log()
                 ;
     }
 
     private Mono<Integer> calculateOrderSum(String customerId) {
         Criteria criteria = Criteria.where("customerId").is(customerId);
         return reactiveMongoTemplate.find(Query.query(criteria), Order.class)
-                .map(order -> order.getPrice().intValue())
+                .map(order ->  {
+                    log.info("Calculating order sum: {}, total: {}, calculated: {}", order, order.getTotalAmount(), order.getPrice().intValue()*order.getQuantity().intValue() );
+                    return order.getPrice().intValue()*order.getQuantity().intValue();
+                })
                 .reduce(0, Integer::sum)
-//                .log()
+                .log()
                 ;
     }
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: html(~{::title}, ~{::div})}">
+<html lang="en" th:replace="~{layout :: html(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Customer Orders - Customer Order Management</title>
 </head>
@@ -10,21 +10,23 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-md-8">
+
                     <h2 class="mb-1">
                         <i class="fas fa-shopping-cart text-info"></i>
-                        Orders for <span class="text-primary" th:text="${customer.name}"></span>
+                        Orders for <span class="text-primary" th:text="${customer?.name ?: 'Unknown Customer'}"></span>
                     </h2>
+
                     <p class="text-muted mb-0">
-                        <i class="fas fa-envelope"></i> <span th:text="${customer.email}"></span> |
-                        <i class="fas fa-phone"></i> <span th:text="${customer.phone}"></span>
+                        <i class="fas fa-envelope"></i> <span th:text="${customer?.email ?: 'Unknown email'}"></span> |
+                        <i class="fas fa-phone"></i> <span th:text="${customer?.phone ?: 'Unknown phone'}"></span>
                     </p>
                 </div>
                 <div class="col-md-4 text-end">
                     <div class="btn-group">
-                        <a th:href="@{/orders/new(customerId=${customer.id})}" class="btn btn-success">
+                        <a class="btn btn-success" th:href="@{/orders/new(customerId=${customer?.id ?: ''})}">
                             <i class="fas fa-plus"></i> Add New Order
                         </a>
-                        <a href="/customers" class="btn btn-outline-secondary">
+                        <a class="btn btn-outline-secondary" href="/customers">
                             <i class="fas fa-arrow-left"></i> Back to Customers
                         </a>
                     </div>
@@ -58,27 +60,29 @@
                         </td>
                         <td th:text="'$' + ${#numbers.formatDecimal(order.price, 0, 2)}"></td>
                         <td>
-                            <strong class="text-success" th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 0, 2)}"></strong>
+                            <strong class="text-success"
+                                    th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 0, 2)}"></strong>
                         </td>
                         <td th:text="${#temporals.format(order.orderDate, 'MMM dd, yyyy HH:mm')}"></td>
                         <td>
-                                    <span class="badge"
-                                          th:classappend="${order.status == 'COMPLETED'} ? 'bg-success' :
-                                                         ${order.status == 'PENDING'} ? 'bg-warning text-dark' :
-                                                         ${order.status == 'PROCESSING'} ? 'bg-info' :
-                                                         ${order.status == 'SHIPPED'} ? 'bg-primary' :
-                                                         ${order.status == 'DELIVERED'} ? 'bg-success' : 'bg-danger'"
-                                          th:text="${order.status}"></span>
+                            <span class="badge"
+                            th:classappend="${order.status == 'COMPLETED' ? 'bg-success' :
+                                       order.status == 'PENDING' ? 'bg-warning text-dark' :
+                                       order.status == 'PROCESSING' ? 'bg-info' :
+                                       order.status == 'SHIPPED' ? 'bg-primary' :
+                                       order.status == 'DELIVERED' ? 'bg-success' : 'bg-danger'}"
+                            th:text="${order.status}">
+                            </span>
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a th:href="@{/orders/edit/{id}(id=${order.id})}"
-                                   class="btn btn-sm btn-outline-primary" title="Edit Order">
+                                <a class="btn btn-sm btn-outline-primary"
+                                   th:href="@{/orders/edit/{id}(id=${order.id})}" title="Edit Order">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a th:href="@{/orders/delete/{id}(id=${order.id})}"
-                                   class="btn btn-sm btn-outline-danger" title="Delete Order"
-                                   onclick="return confirm('Are you sure you want to delete this order?')">
+                                <a class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Are you sure you want to delete this order?')" th:href="@{/orders/delete/{id}(id=${order.id})}"
+                                   title="Delete Order">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -88,12 +92,12 @@
                 </table>
             </div>
 
-            <div th:if="${#lists.isEmpty(orders)}" class="text-center py-4">
+            <div class="text-center py-4" th:if="${#lists.isEmpty(orders)}">
                 <div class="text-muted">
                     <i class="fas fa-shopping-cart fa-3x mb-3"></i>
                     <h5>No Orders Found</h5>
                     <p>This customer hasn't placed any orders yet.</p>
-                    <a th:href="@{/orders/new(customerId=${customer.id})}" class="btn btn-primary">
+                    <a class="btn btn-primary" th:href="@{/orders/new(customerId=${customer?.id ?: ''})}">
                         <i class="fas fa-plus"></i> Create First Order
                     </a>
                 </div>
