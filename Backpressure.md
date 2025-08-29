@@ -643,14 +643,3 @@ Element kept by consumer: 114
 11:03:21.910 [parallel-5] INFO reactor.Flux.OnBackpressureBufferStrategy.1 -- onNext(222)
 Element kept by consumer: 222
 ```
-
-## 04 Buffer elements on backpressure
-
-```java
-```
-
-Output
-
-```text
-
-```
