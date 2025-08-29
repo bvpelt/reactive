@@ -4,7 +4,9 @@ Backpressure stratgies help to keep the server stable, scalable.
 
 *Not all elements are processed!*
 
-![backpressure](./backpressure.png)
+In the figure the backpressure is shown. The publisher generates events at a higher pace than the consumer can proces them.
+
+![backpressure](images/backpressure.png)
 
 ## 01 No overflow
 

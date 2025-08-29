@@ -16,7 +16,13 @@ The [source code](./src/main/java/com/bsoft/reactive/ReactiveTutorial.java) give
 
 > Task :com.bsoft.reactive.ReactiveTutorial.main()
 ```
+
 ### 01 - Demo Mono test
+
+Using Mono.just("java")
+
+![Mono just](./images/Mono-just.png)
+
 ```bash
 private Mono<String> testMono() {  // This is the publisher
   return Mono.just("Java");        // wrap the string in Mono
@@ -30,7 +36,13 @@ reactiveTutorial.testMono(); // will not work there is no subscription yet. When
 ```text
 08:07:03.085 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 01 - Demo Mono test
 ```
+
 ### 02 - Demo Mono test subscribe
+
+Using Mono.subscribe()
+
+![Mono subscribe](./images/Mono-subscribe.png)
+
 ```bash
 private Mono<String> testMono() {  // This is the publisher
   return Mono.just("Java");        // wrap the string in Mono
@@ -44,7 +56,13 @@ reactiveTutorial.testMono()
 ```text
 08:07:03.121 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 02 - Demo Mono test subscribe
 ```
+
 ### 03 - Demo Mono.just
+
+Using Mono.subscribe(<consumer>)
+
+![Mono subscribe consumer](./images/Mono-subscribe-consumer.png)
+
 ```bash
 private Mono<String> testMono() {  // This is the publisher
   return Mono.just("Java");        // wrap the string in Mono
@@ -59,7 +77,17 @@ reactiveTutorial.testMono()
 08:07:03.126 [main] INFO com.bsoft.reactive.ReactiveTutorial -- 03 - Demo Mono.just
 Java
 ```
+
 ### 04 - Demo Flux.just
+
+Using Flux.just("Java", "Cpp", "Python", "Rust")
+
+![Flux just](./images/Flux-just.png)
+
+Using Flux.subscribe(<consumer>)
+
+![Flux just](./images/Flux-subscribe-consumer.png)
+
 ```bash
 private Flux<String> testFlux() {
     return Flux.just("Java", "Cpp", "Python", "Rust");
@@ -77,7 +105,13 @@ Cpp
 Python
 Rust
 ```
+
 ### 05 - Demo Flux.fromIterable
+
+Using Flux.fromIterable()
+
+![Flux from iterable](./images/Flux-fromiterable.png)
+
 ```bash
 private Flux<String> testFlux01() {
     List<String> programmingLanguages = List.of("Dart", "Javascript", "COBOL", "C++");
@@ -97,7 +131,13 @@ Javascript
 COBOL
 C++
 ```
+
 ### 06 - Demo Flux.map -- each element to uppercase
+
+Using Flux.map()
+
+![Flux map](./images/Flux-map.png)
+
 ```bash
 private Flux<String> testMap() {
 
@@ -120,6 +160,11 @@ COBOL
 C++
 ```
 ### 07 - Demo Flux.flatMap -- each (provider) element to lowercase
+
+Using Flux.flatmap()
+
+![Flux flatmap](./images/Flux-flatmap.png)
+
 ```bash
 private Flux<String> testFlatMap() {
 
@@ -143,6 +188,11 @@ cobol
 c++
 ```
 ### 08 - Demo Flux.skip -- skip number of elements from provider
+
+Using Flux.skip(<number>)
+
+![Flux skip](./images/Flux-skip.png)
+
 ```bash
 private Flux<String> testSkip() {
 
@@ -166,6 +216,11 @@ COBOL
 C++
 ```
 ### 09 - Demo Flux.skip -- skip with delay
+
+Using Flux.skip(<delay>)
+
+![Flux skip delay](./images/Flux-skip-delay.png)
+
 ```bash
 private Flux<String> testSkipDuration() {
 
@@ -195,6 +250,11 @@ C++
 08:07:07.197 [parallel-4] INFO reactor.Flux.ConcatMapNoPrefetch.1 -- onComplete()
 ```
 ### 10 - Demo Flux.skip -- skip with delay on skip
+
+Using Flux.delayElements(<delay>)
+
+![Flux delay on elements](./images/Flux-delayelements.png)
+
 ```bash
 private Flux<String> testSkipDuration01() {
 
@@ -217,6 +277,11 @@ COBOL
 C++
 ```
 ### 11 - Demo Flux.skipLast
+
+Using Flux.skipLast(<number>)
+
+![Flux skiplast](./images/Flux-skiplast.png)
+
 ```bash
 private Flux<String> testSkipLast() {
 
@@ -237,6 +302,11 @@ Dart
 Javascript
 ```
 ### 12 - Demo Flux.range
+
+Using Flux.range(<start>, <number>)
+
+![Flux range](./images/Flux-range.png)
+
 ```bash
 private Flux<Integer> testSkipRange() {
 
@@ -275,6 +345,11 @@ reactiveTutorial.testSkipRange()
 20
 ```
 ### 13 - Demo Flux.skipWhile
+
+Using Flux.skipwhile(predicate)
+
+![Flux skipwhile](./images/Flux-skipwhile.png)
+
 ```bash
 private Flux<Integer> testSkipWhile() {
 
@@ -305,6 +380,11 @@ reactiveTutorial.testSkipWhile()
 20
 ```
 ### 14 - Demo Flux.skipUntil
+
+Using Flux.skipUntil(predicate)
+
+![Flux skipuntil](./images/Flux-skipuntil.png)
+
 ```bash
 private Flux<Integer> testSkipUntil() {
 
@@ -334,6 +414,12 @@ reactiveTutorial.testSkipUntil()
 20
 ```
 ### 15 - Demo Flux.concat
+
+Using Flux.concat(... sources)
+
+![Flux concat](./images/Flux-concat.png)
+
+
 ```bash
 private Flux<Integer> testConcat() {
 
@@ -393,6 +479,11 @@ reactiveTutorial.testConcat()
 120
 ```
 ### 16 - Demo Flux.merge
+
+Using Flux.merge(... sources)
+
+![Flux merge](./images/Flux-merge.png)
+
 ```bash
 private Flux<Integer> testMerge() {
 
@@ -513,6 +604,11 @@ Thread.sleep(3000);
 120
 ```
 ### 18 - Demo Flux.zip
+
+Using Flux.zip(T1, T2)
+
+![Flux zip](./images/Flux-zip.png)
+
 ```bash
 private Flux<Tuple2<Integer, Integer>> testZip() {
 
