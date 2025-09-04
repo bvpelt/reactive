@@ -52,6 +52,37 @@ spring:
       max-in-memory-size: 1MB
       max-disk-usage-per-part: 10MB
 
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    # Custom configuration
+    config-url: /api-docs/swagger-config
+    url: /api-docs
+    # UI customization
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    filter: true
+    # Custom CSS
+    custom-css-url: /css/swagger-custom.css
+  # Group API documentation
+  group-configs:
+    - group: 'customers'
+      paths-to-match: '/customer/**'
+      display-name: 'Customer API'
+    - group: 'orders'
+      paths-to-match: '/orders/**'
+      display-name: 'Orders API'
+  # General settings
+  show-actuator: false
+  writer-with-default-pretty-printer: true
+
+
 # Server Configuration
 server:
   port: 8080

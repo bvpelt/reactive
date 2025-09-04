@@ -1,5 +1,6 @@
 package com.bsoft.reactive.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,13 +18,45 @@ import java.util.UUID;
 public class Order {
 
     @Id
+    @Schema(description = "Unique identifier for the order",
+            example = "007f1f77bcf86cd799439051",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private String id;
+
+    @Schema(description = "Unique identifier for the customer",
+            example = "007f1f77bcf86cd799439051",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private String customerId;
+
+    @Schema(description = "Name of the product",
+            example = "Laptop",
+            required = true,
+            minLength = 2,
+            maxLength = 100)
     private String productName;
+
+    @Schema(description = "Number of the products",
+            example = "2",
+            required = true)
     private Integer quantity;
+
+    @Schema(description = "Price of the products",
+            example = "599.99",
+            required = true)
     private BigDecimal price;
+
+    @Schema(description = "Total price of the product. This is price * quantity",
+            example = "599.99",
+            required = true)
     private BigDecimal totalAmount;
+
+    @Schema(description = "Timestamp when the order was created",
+            example = "2025-01-15T10:30:00")
     private LocalDateTime orderDate;
+
+    @Schema(description = "Status of the order",
+            example = "PENDING, PROCESSING, SHIPPED, DELIVERED, COMPLETED, CANCELED",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private String status;
 
     public Order() {

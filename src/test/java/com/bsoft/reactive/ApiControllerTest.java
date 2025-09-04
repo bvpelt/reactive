@@ -35,13 +35,15 @@ public class ApiControllerTest {
     @MockitoBean
     private OrderService orderService;
 
+    private final String baseUrl = "/api/v1";
+
     @Test
     public void testGetAllCustomers() {
         Customer customer = new Customer("John Doe", "john@example.com", "123-456-7890", "123 Main St");
         when(customerService.getAllCustomers()).thenReturn(Flux.just(customer));
 
         webTestClient.get()
-                .uri("/api/customers")
+                .uri(baseUrl + "/customers")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -57,7 +59,7 @@ public class ApiControllerTest {
         when(customerService.saveCustomer(any(Customer.class))).thenReturn(Mono.just(customer));
 
         webTestClient.post()
-                .uri("/api/customers")
+                .uri(baseUrl +"/customers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(customer)
                 .exchange()
@@ -71,7 +73,7 @@ public class ApiControllerTest {
         when(orderService.getAllOrders()).thenReturn(Flux.just(order));
 
         webTestClient.get()
-                .uri("/api/orders")
+                .uri(baseUrl + "/orders")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -86,7 +88,7 @@ public class ApiControllerTest {
         when(orderService.saveOrder(any(Order.class))).thenReturn(Mono.just(order));
 
         webTestClient.post()
-                .uri("/api/orders")
+                .uri(baseUrl + "/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(order)
                 .exchange()
@@ -99,7 +101,7 @@ public class ApiControllerTest {
         when(customerService.deleteCustomer(anyString())).thenReturn(Mono.empty());
 
         webTestClient.delete()
-                .uri("/api/customers/customer1")
+                .uri(baseUrl + "/customers/customer1")
                 .exchange()
                 .expectStatus().isNoContent();
     }
