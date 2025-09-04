@@ -1,5 +1,6 @@
 package com.bsoft.reactive;
 
+import com.bsoft.reactive.util.Item;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -8,6 +9,7 @@ import reactor.core.publisher.SignalType;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuple3;
 import reactor.util.function.Tuple4;
+import com.bsoft.reactive.util.LinkedList;
 
 import java.time.Duration;
 import java.util.List;
@@ -19,7 +21,7 @@ public class ReactiveTutorial {
 
     public static void main(String[] args) throws InterruptedException {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
-
+/*
         log.info("01 - Demo Mono test");
         reactiveTutorial.testMono(); // will not work there is no subscription yet. When running the program exits immeadiately
         // the compiler gives a warning: Value is never used as Publisher
@@ -186,6 +188,8 @@ public class ReactiveTutorial {
         reactiveTutorial.testDoOnErrorMap()
                 .subscribe(System.out::println);
 
+
+ */
         log.info("40 - Demo Flux.expand");
         reactiveTutorial.testExpand()
                 .subscribe(System.out::println);
@@ -534,10 +538,37 @@ public class ReactiveTutorial {
                 .onErrorMap(throwable -> new UnsupportedOperationException(throwable.getMessage()));
     }
 
+    private Flux<Item> testExpand() {
+        LinkedList linkedList = new LinkedList();
 
-    private Flux<Integer> testExpand() {
-        Flux<Integer> flux = Flux.range(1, 10);
-        return flux;
+        for (int i = 0; i < 10; i++) {
+            Item item = new Item(i);
+            linkedList.add(item);
+        }
+        Item current = null;
+
+        log.info("LinkedList: {}", linkedList);
+
+        return fetchNext(current, linkedList)
+                .expand(response -> {
+                    if (response == null) {
+                        return Mono.empty();
+                    } else {
+                        return fetchNext(response, linkedList);
+                    }
+                });
     }
 
+    private Mono<Item> fetchNext(Item item, LinkedList linkedList) {
+        if (item == null) {
+            return Mono.just(linkedList.getFirst());
+        } else {
+            Item next = item.getNext();
+            if (next == null) {
+                return Mono.empty();
+            } else {
+                return Mono.just(next);
+            }
+        }
+    }
 }

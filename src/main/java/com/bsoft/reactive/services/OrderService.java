@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+
 @Service
 @Slf4j
 public class OrderService {
@@ -38,6 +40,8 @@ public class OrderService {
                     existingOrder.setQuantity(order.getQuantity());
                     existingOrder.setPrice(order.getPrice());
                     existingOrder.setStatus(order.getStatus());
+                    existingOrder.setTotalAmount(order.getPrice().multiply(new BigDecimal(order.getQuantity())));
+                    log.info("========= Updating order with id: {} quantity: {}, price: {}, total: {}", existingOrder.getId(), existingOrder.getQuantity(), existingOrder.getPrice(), existingOrder.getTotalAmount());
                     return orderRepository.save(existingOrder);
                 });
     }

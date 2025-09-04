@@ -81,6 +81,11 @@ public class ApiController {
         return orderService.updateOrder(id, order);
     }
 
+    @PutMapping("/orders/update/{id}")
+    public Mono<Order> updateOrder2(@PathVariable String id, @RequestBody Order order) {
+        return orderService.updateOrder(id, order);
+    }
+
     @DeleteMapping("/orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> deleteOrder(@PathVariable String id) {
