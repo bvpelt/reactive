@@ -1,20 +1,18 @@
 package com.bsoft.reactive.util;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class LinkedList {
     private Item current = null;
     private Item first = null;
     private Item last = null;
 
-    public void addItem(Item item) {
+    public void add(Item item) {
         if (first == null) {
             first = item;
             last = item;
@@ -24,6 +22,16 @@ public class LinkedList {
             item.setPrevious(last);
             last = item;
         }
+    }
+
+    public Item getFirst() {
+        current = first;
+        return first;
+    }
+
+    public Item getLast() {
+        current = last;
+        return last;
     }
 
     public Item getNext() {
@@ -45,6 +53,6 @@ public class LinkedList {
             current = previous;
         }
 
-        return previous;
+        return current;
     }
 }

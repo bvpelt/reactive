@@ -14,8 +14,10 @@ public class LinkListTest {
 
         for (int i = 0; i < 10; i++) {
             Item item = new Item(i);
-            linkedList.addItem(item);
+            linkedList.add(item);
         }
+
+        log.info("LinkedList: {}", linkedList);
 
         Item current = linkedList.getFirst();
         while (current != null) {
@@ -27,6 +29,30 @@ public class LinkListTest {
         while (current != null) {
             log.info("Current Item: {}", current);
             current = current.getPrevious();
+        }
+    }
+
+    @Test
+    public void createList1() {
+        LinkedList linkedList = new LinkedList();
+
+        for (int i = 0; i < 10; i++) {
+            Item item = new Item(i);
+            linkedList.add(item);
+        }
+
+        log.info("LinkedList: {}", linkedList);
+
+        Item current = linkedList.getFirst();
+        while (current != null) {
+            log.info("Current Item: {}", current);
+            current = linkedList.getNext();
+        }
+
+        current = linkedList.getLast();
+        while (current != null) {
+            log.info("Current Item: {}", current);
+            current = linkedList.getPrevious();
         }
     }
 }
