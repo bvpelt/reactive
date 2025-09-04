@@ -9,6 +9,8 @@ The publisher generates data, the subscriber uses data
 
 ![Publish Subscribe](./images/publish-subscribe.png)
 
+Generated api spec on http://localhost:8080/swagger-ui/index.html#/
+
 For documentation on react see https://projectreactor.io/
 
 In reactive programming there are two main classes:
