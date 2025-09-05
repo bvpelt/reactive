@@ -67,13 +67,14 @@ public class ApiController {
     })
     @GetMapping(value = "/customers/{customerId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<Customer> getCustomer(@PathVariable String id) {
-        return customerService.getCustomerById(id);
+    public Mono<Customer> getCustomer(@PathVariable("customerId") String customerId) {
+        log.info("001 getCustomer by ID {}", customerId);
+        return customerService.getCustomerById(customerId);
     }
 
     @Tag(name = "Customers", description = "Customer management API")
     @GetMapping("/customers/{id}/with-orders")
-    public Mono<Customer> getCustomerWithOrders(@PathVariable String id) {
+    public Mono<Customer> getCustomerWithOrders(@PathVariable("id") String id) {
         return customerService.getCustomerWithOrders(id);
     }
 
@@ -149,8 +150,8 @@ public class ApiController {
     })
     @DeleteMapping("/customers/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteCustomer(@PathVariable String id) {
-        return customerService.deleteCustomer(id);
+    public Mono<Void> deleteCustomer(@PathVariable("customerId") String customerId) {
+        return customerService.deleteCustomer(customerId);
     }
 
 

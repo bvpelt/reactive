@@ -36,6 +36,7 @@ public class CustomerService {
     }
 
     public Mono<Customer> getCustomerById(String id) {
+        log.info("002 getCustomerById {}", id);
         return customerRepository.findById(id);
     }
 
