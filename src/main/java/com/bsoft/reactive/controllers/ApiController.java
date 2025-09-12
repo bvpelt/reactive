@@ -1,22 +1,18 @@
 package com.bsoft.reactive.controllers;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import com.bsoft.reactive.model.Customer;
-
 import com.bsoft.reactive.model.Order;
 import com.bsoft.reactive.services.CustomerService;
 import com.bsoft.reactive.services.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,11 +21,15 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/v1")
 @Slf4j
 public class ApiController {
-    @Autowired
-    private CustomerService customerService;
 
-    @Autowired
-    private OrderService orderService;
+    private final CustomerService customerService;
+
+    private final OrderService orderService;
+
+    public ApiController(CustomerService customerService, OrderService orderService) {
+        this.customerService = customerService;
+        this.orderService = orderService;
+    }
 
     @Tag(name = "Customers", description = "Customer management API")
     @Operation(
@@ -154,9 +154,6 @@ public class ApiController {
         return customerService.deleteCustomer(customerId);
     }
 
-
-
-
     // Order REST endpoints
     @Tag(name = "Orders", description = "Order management API")
     @Operation(
@@ -244,7 +241,7 @@ public class ApiController {
                     description = "Invalid order data"
             )
     })
-    @PutMapping(value ="/orders/{id}",
+    @PutMapping(value = "/orders/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<Order> updateOrder(@PathVariable String id, @RequestBody Order order) {

@@ -87,7 +87,7 @@ public class Order {
     public BigDecimal getTotalAmount() {
         if (this.totalAmount == null) {
             if ((this.quantity != null) && (this.price != null)) {
-            this.totalAmount = this.price.multiply(new BigDecimal(quantity));
+                this.totalAmount = this.price.multiply(new BigDecimal(quantity));
             }
         }
         return this.totalAmount;

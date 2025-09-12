@@ -26,16 +26,13 @@ import static org.mockito.Mockito.when;
 @AutoConfigureWebTestClient
 public class ApiControllerTest {
 
+    private final String baseUrl = "/api/v1";
     @Autowired
     private WebTestClient webTestClient;
-
     @MockitoBean
     private CustomerService customerService;
-
     @MockitoBean
     private OrderService orderService;
-
-    private final String baseUrl = "/api/v1";
 
     @Test
     public void testGetAllCustomers() {
@@ -59,7 +56,7 @@ public class ApiControllerTest {
         when(customerService.saveCustomer(any(Customer.class))).thenReturn(Mono.just(customer));
 
         webTestClient.post()
-                .uri(baseUrl +"/customers")
+                .uri(baseUrl + "/customers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(customer)
                 .exchange()
@@ -103,6 +100,6 @@ public class ApiControllerTest {
         webTestClient.delete()
                 .uri(baseUrl + "/customers/customer1")
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is2xxSuccessful();
     }
 }

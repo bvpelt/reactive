@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -25,11 +24,14 @@ import java.util.Map;
 @Slf4j
 public class DataController {
 
-    @Autowired
-    private ReactiveMongoTemplate reactiveMongoTemplate;
+    private final ReactiveMongoTemplate reactiveMongoTemplate;
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    public DataController(ReactiveMongoTemplate reactiveMongoTemplate, CustomerRepository customerRepository) {
+        this.reactiveMongoTemplate = reactiveMongoTemplate;
+        this.customerRepository = customerRepository;
+    }
 
     @Tag(name = "Data", description = "Data API, create a customer")
     @Operation(
@@ -160,9 +162,9 @@ public class DataController {
     private Mono<Integer> calculateOrderSum(String customerId) {
         Criteria criteria = Criteria.where("customerId").is(customerId);
         return reactiveMongoTemplate.find(Query.query(criteria), Order.class)
-                .map(order ->  {
-                    log.info("Calculating order sum: {}, total: {}, calculated: {}", order, order.getTotalAmount(), order.getPrice().intValue()*order.getQuantity().intValue() );
-                    return order.getPrice().intValue()*order.getQuantity().intValue();
+                .map(order -> {
+                    log.info("Calculating order sum: {}, total: {}, calculated: {}", order, order.getTotalAmount(), order.getPrice().intValue() * order.getQuantity().intValue());
+                    return order.getPrice().intValue() * order.getQuantity().intValue();
                 })
                 .reduce(0, Integer::sum)
                 .log()

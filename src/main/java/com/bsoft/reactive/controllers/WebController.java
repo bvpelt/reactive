@@ -5,7 +5,6 @@ import com.bsoft.reactive.model.Order;
 import com.bsoft.reactive.services.CustomerService;
 import com.bsoft.reactive.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,14 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class WebController {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public WebController(CustomerService customerService, OrderService orderService) {
+        this.customerService = customerService;
+        this.orderService = orderService;
+    }
 
     @GetMapping("/")
     public String home() {
@@ -64,28 +66,28 @@ public class WebController {
     }
 
     @GetMapping("/customers/{id}/orders")
-    public String customerOrders(@PathVariable String id, Model model) {
+    public Mono<String> customerOrders(@PathVariable String id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
         model.addAttribute("orders", orderService.getOrdersByCustomerId(id));
-        return "customer-orders";
+        return Mono.just("customer-orders");
     }
 
     // Order web pages
     @GetMapping("/orders")
-    public String orders(Model model) {
+    public Mono<String> orders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
-        return "orders";
+        return Mono.just("orders");
     }
 
     @GetMapping("/orders/new")
-    public String newOrder(Model model, @RequestParam(required = false) String customerId) {
+    public Mono<String> newOrder(Model model, @RequestParam(required = false) String customerId) {
         Order order = new Order();
         if (customerId != null) {
             order.setCustomerId(customerId);
         }
         model.addAttribute("order", order);
         model.addAttribute("customers", customerService.getAllCustomers());
-        return "order-form";
+        return Mono.just("order-form");
     }
 
     @GetMapping("/orders/edit/{id}")
